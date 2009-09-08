@@ -35,7 +35,7 @@
 		                	defaults : {
 		                		border : false
 		                	},
-		                	html : 'ArtykuĹ�y bÄ�dÄ� tu oĹ�je'
+		                	html : 'Artykuły'
 		                }]
 		            }, {
 		                contentEl: 'categories',
