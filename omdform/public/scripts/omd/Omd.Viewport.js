@@ -4,7 +4,7 @@
 	
 	var _api = Omd.Viewport;
 	
-	var _lang = Omd.Lang;
+	var _lang = Omd.Langpl;
 	
 	_api.Init = function() {
 	
