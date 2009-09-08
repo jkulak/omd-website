@@ -20,7 +20,7 @@
 		            height: 80,
 		            autoEl: {
 		                tag: 'div',
-		                html:'<p><img src="' + Omg.publicUrl + 'images/omdcms.jpg" alt="OMGCms - system zarządzania treścią" /></p>'
+		                html:'<p><img src="' + Omg.publicUrl + 'images/omdcms.jpg" alt="OMGCms - system zarzÄ�dzania treĹ�ciÄ�" /></p>'
 		            }
 		        }),
 		        new Ext.TabPanel({
@@ -35,7 +35,7 @@
 		                	defaults : {
 		                		border : false
 		                	},
-		                	html : 'Artykuły będą tu ołje'
+		                	html : 'ArtykuĹ�y bÄ�dÄ� tu oĹ�je'
 		                }]
 		            }, {
 		                contentEl: 'categories',
