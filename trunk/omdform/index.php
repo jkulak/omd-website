@@ -8,12 +8,14 @@ set_include_path('.' . PATH_SEPARATOR . './library'
    . PATH_SEPARATOR . './application/models/'
    . PATH_SEPARATOR . get_include_path()
 		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/external/' //Zend
-		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'); //Dupa
+		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'); //Hajek to dupa
 
 include "Zend/Loader.php";
 Zend_Loader::loadClass('Zend_Controller_Front');
 Zend_Loader::loadClass('Zend_Loader_Autoloader');
 $loader = Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+
+Zend_Layout::startMvc();
 
 // setup controller
 $frontController = Zend_Controller_Front::getInstance();
