@@ -28,32 +28,32 @@
 	//tytuł buttona dodaj kategorie
 	_lang.toolbarTitleAdd = 'Dodaj';
 	
-	//text z tooltipa dla buttona dodaj kategorie
-	_lang.toolbarTextAdd = 'Kliknij ady dodać kategorie';
+	//text z tooltipa dla buttona dodaj artykuł
+	_lang.toolbarTextAdd = 'Kliknij ady dodać artykuł';
 	
 	//tytuł buttona zapisz kategorie
 	_lang.toolbarTitleSave = 'Zapisz';
 	
-	//text z tooltipa dla buttona zapisz kategorie
-	_lang.toolbarTextSave = 'Kliknij aby zapisać kategorie';
+	//text z tooltipa dla buttona zapisz artykuł
+	_lang.toolbarTextSave = 'Kliknij aby zapisać artykuł';
 	
 	//tytuł buttona edytuj kategorie
 	_lang.toolbarTitleEdit = 'Edytuj';
 	
-	//text z tooltipa dla buttona edytuj kategorie
-	_lang.toolbarTextEdit = 'Kliknij aby edytować kategorie';
+	//text z tooltipa dla buttona edytuj artykuł
+	_lang.toolbarTextEdit = 'Kliknij aby edytować artykuł';
 	
-	//tytuł buttona anuluj kategorie
+	//tytuł buttona anuluj artykuł
 	_lang.toolbarTitleCancel = 'Anuluj';
 	
-	//text z tooltipa dla buttona anuluj kategorie
-	_lang.toolbarTextCancel = 'Kliknij aby anulować kategorie';
+	//text z tooltipa dla buttona anuluj artykuł
+	_lang.toolbarTextCancel = 'Kliknij aby anulować artykuł';
 	
 	//tytuł buttona usuń kategorie
 	_lang.toolbarTitleDelete = 'Usuń';
 	
-	//text z tooltipa dla buttona usuń kategorie
-	_lang.toolbarTextDelete = 'Kliknij aby usunąć kategorie';
+	//text z tooltipa dla buttona usuń artykuł
+	_lang.toolbarTextDelete = 'Kliknij aby usunąć artykuł';
 	
 	//tytuł buttona dodaj kategorie
 	_lang.toolbarTitleAddCategory = 'Dodaj';
