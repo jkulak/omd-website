@@ -567,3 +567,11 @@
 	_self.Init();
 
 })();
+
+if( !window.console ) {
+    window.console = {};
+    window.console.log = function(){};
+    window.console.dir = function(){};
+    window.console.info = function(){};
+    window.console.error = function(){};
+}
