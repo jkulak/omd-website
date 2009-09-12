@@ -1,55 +1,63 @@
 <?php
-/**
- * @desc Dupa_List
- * 
- * @author krzysiek
- *
- */
 
-class Dupa_List implements Iterator, ArrayAccess
+/**
+ * Obsluga list (tak jak tablic)
+ * 
+ * @author Playah
+ */
+class Dupa_List implements ArrayAccess, Iterator
 {
-    private $_list = array();
+    /**
+     * Lista elementow
+     * 
+     * @var unknown_type
+     */
+    private $_items;
     
-    private $_position = 0;
-    
-    function add( $item ) {
-    	array_push( $this->_list, $item );
+    private $position = 0;
+
+    public function __construct() {
+        $this->position = 0;
     }
-    
-    function count( $item ) {
-    	return count( $this->_list );
-    }
-    
-	function rewind() {
-        $this->_position = 0;
+
+    function rewind() {
+        $this->position = 0;
     }
 
     function current() {
-        return $this->_list[$this->_position];
+        return $this->_items[$this->position];
     }
 
     function key() {
-        return $this->_position;
+        return $this->position;
     }
 
     function next() {
-        ++$this->_position;
+        ++$this->position;
     }
 
     function valid() {
-        return isset($this->_list[$this->_position]);
+        return isset($this->_items[$this->position]);
     }
 
-    public function offsetSet($offset, $value) {
-        $this->_list[$offset] = $value;
+    public function offsetSet( $offset, $value )
+    {
+        $this->_items[$offset] = $value;
     }
-    public function offsetExists($offset) {
-        return isset($this->_list[$offset]);
+
+    public function offsetExists( $offset )
+    {
+        return isset( $this->_items[$offset] );
     }
-    public function offsetUnset($offset) {
-        unset($this->_list[$offset]);
+
+    public function offsetUnset( $offset )
+    {
+        unset( $this->_items[$offset] );
     }
-    public function offsetGet($offset) {
-        return isset($this->_list[$offset]) ? $this->_list[$offset] : null;
+
+    public function offsetGet( $offset )
+    {
+        return $this->_items[$offset];
     }
 }
+?>

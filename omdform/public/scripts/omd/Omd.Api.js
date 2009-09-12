@@ -7,7 +7,8 @@
 	_self.getArticleList = new Ext.data.Store({
 		url : Omd.apiUrl + 'index/getarticlelist',
      	reader: new Ext.data.JsonReader({
-     		root: 'result.items'
+     		root: 'result.items',
+     		totalProperty : 'result.total'
      	}, [
      		{name: 'id'},
      		{name: 'title'},
@@ -19,7 +20,8 @@
 	_self.getCategoryList =  new Ext.data.Store({
 		url : Omd.apiUrl + 'index/getcategorylist',
      	reader: new Ext.data.JsonReader({
-     		root: 'result.items'
+     		root: 'result.items',
+     		totalProperty : 'result.total'
      	}, [
      		{name: 'id'},
      		{name: 'name'},
@@ -27,5 +29,20 @@
      	])
     });
 	
+	_self.getStatus = new Ext.data.Store({
+		data : { 'status' : [
+      			{ name : ['enabled'], id : 'enabled' },
+      			{ name : ['disabled'], id : 'disabled' },
+      			{ name : ['test'], id : 'test' }
+      		]
+      	},
+      	reader: new Ext.data.JsonReader({
+      		root: 'status'
+      	}, [
+      		{name: 'name'},
+      		{name: 'id'}
+      	])
+      });
+
 
 })();
