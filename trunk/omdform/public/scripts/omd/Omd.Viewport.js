@@ -39,9 +39,11 @@
                 width : 700
             },
             items       : [
-                { fieldLabel : 'Id', xtype :'textfield' ,name:'id', width: 60, readOnly : true },
+                { fieldLabel : 'Id', xtype :'textfield', id : 'articleid', name:'id', width: 60, readOnly : true },
                 { allowBlank : false, fieldLabel : 'Tytuł', xtype :'textfield' ,name:'title' },
                 { allowBlank : false, fieldLabel : 'Lead', xtype :'textarea' ,name:'lead' },
+                { allowBlank : false, fieldLabel : 'Data aktywacji', xtype :'datefield' ,name:'activate', width: 180, format: 'Y-m-d H:i:s' },
+                { allowBlank : false, fieldLabel : 'Data deaktywacji', xtype :'datefield' ,name:'deactivate', width: 180, format: 'Y-m-d H:i:s' },
                 { fieldLabel : 'Content', id : 'contentTextarea', xtype :'textarea' ,name:'content', height : 600, listeners : {
                     render : function() {
                         tinyMCE.init({
@@ -79,7 +81,25 @@
                         //tinyMCE.get('contentTextarea').getContent()
                     }
                 } },
-                { fieldLabel : 'Autor', xtype :'textfield' ,name:'addedby' },
+                //{ fieldLabel : 'Autor', xtype :'textfield' ,name:'addedby' },
+                //{ fieldLabel : 'Autor modyfikacji', xtype :'textfield' ,name:'updatedby' },
+                {
+                    xtype : 'combo',
+                    id : 'category',
+                    name : 'category',
+                    fieldLabel : 'Kategoria',
+                    displayField : 'name',
+                    hiddenId: 'categoryid',
+                    hiddenName : 'categoryid',
+                    valueField : 'id',
+                    typeAhead : true,
+                    mode : 'local',
+                    triggerAction : 'all',
+                    selectOnFocus : true,
+                    store : _store.categoryList,
+                    width : 100,
+                    ctCls : 'filed'
+                },
                 {
                     xtype : 'combo',
                     id : 'status2',
@@ -105,6 +125,9 @@
             form.items.each(function(item){
                 item.reset();
             });
+            if( tinyMCE.get('contentTextarea') ) {
+            	tinyMCE.get('contentTextarea').setContent(' ');
+            }
         };
         
         _editFormCategory = new Ext.FormPanel({
@@ -123,8 +146,7 @@
             },
             items       : [
                 { fieldLabel : 'Id', xtype :'textfield' ,name:'id', width: 60, readOnly : true },
-                { allowBlank : false, fieldLabel : 'Tytuł', xtype :'textfield' ,name:'title' },
-                { fieldLabel : 'Autor', xtype :'textfield' ,name:'addedby' }
+                { allowBlank : false, fieldLabel : 'Nazwa kategorii:', xtype :'textfield' ,name:'name' }
             ]      
         });
         
@@ -147,7 +169,33 @@
             _editForm.resetForm();
             var selected = _gridPanel.selModel.getSelections()[0];
             if( selected && selected.data ) {
-            	_view.toggleEditMode();
+            	Ext.MessageBox.wait( 'Wczytuje...', 'Proszę czekać' );
+            	Ext.Ajax.request({
+            		   url: Omd.apiUrl + 'index/getarticle',
+            		   success: function( ret, res ){
+            			   Ext.MessageBox.hide();
+            			   var data = Ext.util.JSON.decode( ret.responseText );
+
+            			   _editForm.getForm().setValues({
+            				   id : data.data.id,
+            				   title : data.data.title,
+            				   lead : data.data.lead,
+            				   activate : data.data.activate,
+            				   deactivate : data.data.deactivate,
+            				   content : data.data.content,
+            				   addedby : data.data.addedby,
+            				   updatedby : data.data.updatedby,
+            				   category : data.data.category,
+            				   status2 : data.data.status
+            			   });
+
+            			   _view.toggleEditMode();
+            		   },
+            		   failure: function(){
+            			   Ext.MessageBox.hide();
+            		   },
+            		   params: { id: selected.data.id }
+        		});
             }
     	}
     	
@@ -157,7 +205,24 @@
             values.content = tinyMCE.get('contentTextarea').getContent();
 
             if( form.isValid() ) {
-            	console.log( values );
+
+            	Ext.MessageBox.wait( 'Zapisuje...', 'Proszę czekać' );
+            	
+            	form.submit({
+            		params : {
+            			content2 : values.content
+            		},
+            		url : Omd.apiUrl + 'index/setarticle',
+            		success : function() {
+            			_store.articleList.reload();
+        				Ext.MessageBox.hide();
+            			Ext.MessageBox.alert( 'Informacja', 'Dane zostały zapisane' );
+            		},
+            		failure : function() {
+            			Ext.MessageBox.hide();
+            			Ext.MessageBox.alert( 'Informacja', 'Wystąpił błąd podczas zapisu' );
+            		}
+            	});
             	_view.toggleEditMode( false, true );
             }
     	}
@@ -165,6 +230,52 @@
     	_controler.cancel = function() {
     		_view.toggleEditMode( false, true );
     	}
+    	
+    	_controler.delArticle = function() {
+            var selected = _gridPanel.selModel.getSelections();
+
+            if( selected.length ) {
+                Ext.Msg.show({
+                    title: 'Usuwanie',
+                    msg: ( selected.length > 1 ) ? 'Usunąć wybrane artykuły?' : 'Usunąć wybrany artykuł?',
+                    buttons: Ext.Msg.YESNO,
+                    fn: function( e ){
+                        if( e == 'yes' ) {
+                        	Ext.MessageBox.wait( 'Usuwam...', 'Proszę czekać' );
+                        	
+                        	var remove = function( a ) {
+                            	Ext.Ajax.request({
+                          		   url: Omd.apiUrl + 'index/delarticle',
+                          		   success: function( ret, res ){
+                             		  if( a == selected.length ) {
+                             			  Ext.MessageBox.hide();
+                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane artykuły' : 'Usunięto wybrany artykuł' )
+                             			  _store.articleList.reload();
+                             		  }
+                          		   },
+                          		   failure: function(){
+                          		   },
+                          		   params: { id: selected[i].data.id }
+                             	});
+                        	};
+                        	
+                        	var a = 1;
+                        	for( var i = 0, len = selected.length; i < len; i++ ) {
+                        		remove( a );
+                            	a++;
+                        	}
+                        	
+                        	_view.toggleEditMode( true, true );
+                        }
+                    },
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.QUESTION
+                });
+            } else {
+            	Ext.MessageBox.hide();
+            	Ext.MessageBox.alert( 'Informacja', 'Wystąpił błąd podczas zapisu' );
+            }
+        };
     	
     	_controler.addCategory = function() {
     		_editFormCategory.resetForm();
@@ -175,7 +286,25 @@
             _editFormCategory.resetForm();
             var selected = _gridPanelCategory.selModel.getSelections()[0];
             if( selected && selected.data ) {
-            	_view.toggleEditCategoryMode();
+            	Ext.MessageBox.wait( 'Wczytuje...', 'Proszę czekać' );
+            	Ext.Ajax.request({
+            		   url: Omd.apiUrl + 'index/getcategory',
+            		   success: function( ret, res ){
+            			   Ext.MessageBox.hide();
+            			   var data = Ext.util.JSON.decode( ret.responseText );
+
+            			   _editFormCategory.getForm().setValues({
+            				   id : data.data.id,
+            				   name : data.data.name
+            			   });
+
+            			   _view.toggleEditCategoryMode();
+            		   },
+            		   failure: function(){
+            			   Ext.MessageBox.hide();
+            		   },
+            		   params: { id: selected.data.id }
+        		});
             }
     	}
     	
@@ -185,12 +314,74 @@
 
             if( form.isValid() ) {
             	console.log( values );
+            	
+            	//Ext.MessageBox.wait( 'Zapisuje...', 'Proszę czekać' );
+            	
+            	form.submit({
+            		url : Omd.apiUrl + 'index/setcategory',
+            		success : function() {
+            			_store.categoryList.reload();
+        				Ext.MessageBox.hide();
+            			Ext.MessageBox.alert( 'Informacja', 'Dane zostały zapisane' );
+            		},
+            		failure : function() {
+            			Ext.MessageBox.hide();
+            			Ext.MessageBox.alert( 'Informacja', 'Wystąpił błąd podczas zapisu' );
+            		}
+            	});
+            	
             	_view.toggleEditCategoryMode( false, true );
             }
     	}
     	
     	_controler.cancelCategory = function() {
     		_view.toggleEditCategoryMode( false, true );
+    	}
+    	
+    	_controler.delCategory = function() {
+    		var selected = _gridPanelCategory.selModel.getSelections();
+    		
+    		if( selected.length ) {
+                Ext.Msg.show({
+                    title: 'Usuwanie',
+                    msg: ( selected.length > 1 ) ? 'Usunąć wybrane kategorie?' : 'Usunąć wybraną kategorie?',
+                    buttons: Ext.Msg.YESNO,
+                    fn: function( e ){
+                        if( e == 'yes' ) {
+                        	Ext.MessageBox.wait( 'Usuwam...', 'Proszę czekać' );
+                        	
+                        	var remove = function( a ) {
+                            	Ext.Ajax.request({
+                          		   url: Omd.apiUrl + 'index/delcategory',
+                          		   success: function( ret, res ){
+                             		  if( a == selected.length ) {
+                             			  Ext.MessageBox.hide();
+                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie' : 'Usunięto wybraną kategorię' )
+                             			  _store.categoryList.reload();
+                             		  }
+                          		   },
+                          		   failure: function(){
+                          		   },
+                          		   params: { id: selected[i].data.id }
+                             	});
+                        	};
+                        	
+                        	var a = 1;
+                        	for( var i = 0, len = selected.length; i < len; i++ ) {
+                        		remove( a );
+                            	a++;
+                        	}
+                        	
+                        	_view.toggleEditMode( true, true );
+                        }
+                    },
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.QUESTION
+                });
+            } else {
+            	Ext.MessageBox.hide();
+            	Ext.MessageBox.alert( 'Informacja', 'Wystąpił błąd podczas zapisu' );
+            }
     	}
     }
 	
@@ -208,20 +399,7 @@
 		
 		_store.categoryList = _api.getCategoryList;
 		
-		_store.status = new Ext.data.Store({
-			data : { 'status' : [
-     			{ name : ['enabled'], id : 0 },
-     			{ name : ['disabled'], id : 1 },
-     			{ name : ['test'], id : 2 }
-     		]
-     	},
-     	reader: new Ext.data.JsonReader({
-     		root: 'status'
-     	}, [
-     		{name: 'name'},
-     		{name: 'id'}
-     	])
-     });
+		_store.status = _api.getStatus;
 
 	};
 	
@@ -247,7 +425,10 @@
 	            Ext.getCmp('omdSaveArticle').enable();
 	            Ext.getCmp('omdEditArticle').disable();        
 	            Ext.getCmp('omdCancelArticle').enable();
-	            if( create ) Ext.getCmp('omdDeleteArticle').disable();
+	            if( create ) {
+	            	Ext.getCmp('omdDeleteArticle').disable();
+	            	//console.log( Ext.getCmp('articleid') );
+	            }
 	            Ext.getCmp('omgbbarart').hide();
 	        }
 	    }
@@ -283,7 +464,7 @@
 	var _dataPagerCategory = {};
 	
     var _dataPagerInit = function(){
-        _dataPager = _dataPagerCreate(); 
+        _dataPager = _dataPagerCreate();
         _dataPagerCategory = _dataPagerCategoryCreate();
     };
     var _dataPagerCreate = function(){
@@ -374,7 +555,7 @@
                 },{
                     text        : _lang.toolbarTitleDelete, 
                     id          : 'omdDeleteArticle',
-                    handler     :  function(){},
+                    handler     :  _controler.delArticle,
                     tooltip     : {
                         text    : _lang.toolbarTextDelete,
                         title   : _lang.toolbarTitleDelete,
@@ -427,7 +608,7 @@
             },{
                 text        : _lang.toolbarTitleDeleteCategory, 
                 id          : 'omdDeleteCategory',
-                handler     :  function(){},
+                handler     :  _controler.delCategory,
                 tooltip     : {
                     text    : _lang.toolbarTextDeleteCategory,
                     title   : _lang.toolbarTitleDeleteCategory,
@@ -499,9 +680,9 @@
 		
 		_configInit();
 		_viewInit();
-		_dataPagerInit();
 		_initStore();
-		_initControler();;
+		_dataPagerInit();
+		_initControler();
 		_gridPanelInit();
 		_controllToolbarInit();
 		_editFormInit();
