@@ -1,13 +1,32 @@
 <?php
+
+function pr( $txt )
+{
+	echo '<pre style="float:left; clear:both; width:100%; font-size:11px; color:#004871; background:#eaf7ff; border:1px solid #0089d7">';
+	print_r( $txt );
+	echo '</pre>';
+} 
+
+//ini_set('display_errors', 1);
+
+defined('ROOT_PATH')
+    || define('ROOT_PATH', realpath(dirname(__FILE__) ));
+
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath( ROOT_PATH . '/application') ) ;
+
 error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set('Europe/London');
-set_include_path('.'
-	. PATH_SEPARATOR . './library'
-	. PATH_SEPARATOR . './application/models/'
+
+set_include_path(
+      ROOT_PATH
+	. PATH_SEPARATOR . realpath( ROOT_PATH .'/library' )
+	. PATH_SEPARATOR . realpath( APPLICATION_PATH )
+	. PATH_SEPARATOR . realpath( APPLICATION_PATH . '/models' )
 	. PATH_SEPARATOR . get_include_path()
 	. PATH_SEPARATOR . '/home/hhbd/lib/external/'
 	. PATH_SEPARATOR . '/home/hhbd/lib/internal/');
-
+	
 include "Zend/Loader.php";
 
 Zend_Loader::loadClass('Zend_Controller_Front');
@@ -15,9 +34,12 @@ Zend_Loader::loadClass('Zend_View');
 
 // setup controller
 $frontController = Zend_Controller_Front::getInstance();
+//$this->frontController->setParam('noErrorHandler', TRUE);
 $frontController->throwExceptions(true);
-$frontController->setControllerDirectory('./application/controllers');
-$frontController->setBaseUrl('/');
+
+$frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ) );
+//$frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ), 'omd' );
+//$frontController->setBaseUrl('/omd');
 
 $view = new Zend_View;
 $view->setEncoding('UTF-8');
@@ -30,8 +52,8 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 Zend_Layout::startMvc(
 	array(
-		'layoutPath' => './application/views/layouts',
-    'layout' => 'common'
+		'layoutPath' => realpath( APPLICATION_PATH . '/views/layouts' ),
+    	'layout' => 'common'
 		)
 		);
 
@@ -51,4 +73,11 @@ $router->addRoute('omdschool', new Zend_Controller_Router_Route('omd-school.html
 $router->addRoute('siecomd', new Zend_Controller_Router_Route('siec-omd.html', array('controller' => 'index', 'action' => 'siecomd')));
 
 // run!
-$frontController->dispatch();
+try
+{
+    $frontController->dispatch();
+}
+catch( Exception $e )
+{
+    echo $e;
+}

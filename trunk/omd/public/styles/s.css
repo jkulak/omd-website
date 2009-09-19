@@ -58,14 +58,22 @@ p {
 
 #navigation {
 	background: #2D414A;
-	padding: 7px 0 7px 0;
+	padding: 4px 0 3px 0;
 	width: 100%;
 	float: left;
 }
 
 #navigation ul li {
 	display: inline;
-	margin-right: 15px;
+	margin-right: 11px;
+}
+
+#navigation ul li.second {
+	margin: 0 60px 0 20px;
+}
+
+#navigation ul li.last {
+	margin-right: 0;
 }
 
 #navigation ul li a {
@@ -83,7 +91,7 @@ p {
 	float: left;
 	width: 23px;
 	height: 20px;
-	background: url('/public/images/houseico.png');
+	background: url(../../public/images/houseico.gif) no-repeat top left;
 	margin: 0 12px 0 10px;
 }
 
@@ -91,6 +99,7 @@ p {
 #content {
 	float: left;
 	width: 100%;
+	overflow:hidden
 }
 
 /* Main column */
@@ -127,9 +136,24 @@ p {
 #additional {
 	float: left;
 	width: 200px;
+	margin:0 0 -10000px;
+	padding:0 0 10000px;
+	ovreflow:hidden;
 	background: #FC0026;
-	padding-top: 18px;
 	color: white;
+}
+
+#additional .topBlock{
+	min-height:268px;
+	margin-top: 18px;
+}
+
+* html #additional .topBlock {
+	height:268px;
+}
+
+#additional .news {
+	margin-top: 10px;
 }
 
 #additional p {
@@ -153,7 +177,27 @@ p {
 
 #footer {
 	background: #2D414A;
-	padding: 9px 0 9px 0;
+	padding: 7px 0 6px 0;
 	float: left;
 	width: 100%;
+	color:white;
+	text-align:center
+}
+
+#footer ul {
+	float:right	
+}
+	
+#footer ul li {
+	display: inline;
+	margin-right: 15px;
+}
+
+#footer ul li a {
+	color: white;
+	text-decoration: none;
+}
+
+#footer ul li a:hover {
+	color: #FC0026;
 }
