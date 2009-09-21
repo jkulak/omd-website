@@ -13,7 +13,14 @@ class IndexController extends Zend_Controller_Action
 	{
 	    $ArticlesApi = Dupa_Article_Api::getInstance();
 	    
-	    $articles = $ArticlesApi->getArticlesList( 1, 1 );
+	    try
+	    {
+	        $articles = $ArticlesApi->getArticlesList( 1, 1 );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
 	    
 	    $this->view->addNews = $articles;
 	}
@@ -30,7 +37,7 @@ class IndexController extends Zend_Controller_Action
 	}
 	
 	function zespolAction() {
-		
+		echo 123;
 	}
 	
 	function naszepraceAction() {
