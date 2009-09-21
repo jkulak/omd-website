@@ -90,7 +90,7 @@ class Dupa_Article_Api
     		}		
     		catch( Zend_Db_Exception $e )
     		{
-    		    throw new Dupa_Exception( 'Error getting article', Dupa_Exception::ERROR_DB );
+    		    throw new Dupa_Exception( 'Error getting article: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
     		}
     		
     		if( $result )
@@ -148,7 +148,7 @@ class Dupa_Article_Api
 		    }
 			catch( Zend_Db_Exception $e )
     		{
-    		    throw new Dupa_Exception( 'Error adding article', Dupa_Exception::ERROR_DB );
+    		    throw new Dupa_Exception( 'Error adding article: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
     		}
 
     		if( $result == 1 )
@@ -191,7 +191,7 @@ class Dupa_Article_Api
 		    }
 			catch( Zend_Db_Exception $e )
     		{
-    		    throw new Dupa_Exception( 'Error setting article', Dupa_Exception::ERROR_DB );
+    		    throw new Dupa_Exception( 'Error setting article: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
     		}
 		}
 		else
@@ -220,7 +220,7 @@ class Dupa_Article_Api
 		    }
 			catch( Zend_Db_Exception $e )
     		{
-    		    throw new Dupa_Exception( 'Error deleting article', Dupa_Exception::ERROR_DB );
+    		    throw new Dupa_Exception( 'Error deleting article: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
     		}
 		}
 		else
@@ -255,7 +255,7 @@ class Dupa_Article_Api
 		}		
 		catch( Zend_Db_Exception $e )
 		{
-		    throw new Dupa_Exception( 'Error getting articles list', Dupa_Exception::ERROR_DB );
+		    throw new Dupa_Exception( 'Error getting articles list: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
 		}
 
 		if( $result )
