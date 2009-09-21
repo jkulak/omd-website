@@ -17,7 +17,7 @@ class Dupa_Article_Api
 	const DB_ADAPTER	= 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'www';
+	const DB_USER		= 'hhbd_www';
 	const DB_PASS		= 'www';
 	
 	/**
