@@ -1,1 +1,16 @@
-<h2>Aktualności</h2>
+<div class="aktualnosci">
+	<h2>Aktualności</h2>
+	
+	<?php if( $this->mainNews ) : ?>
+    	<ul class="news">
+    	<?php for( $i = 0, $cnt = $this->mainNews->length(); $i < $cnt; $i++ ) :?>
+    	<li>
+        	<a href="/artykul.html">
+        		<span class="h3"><?php echo $this->mainNews[$i]->getTitle() ?></span>
+        		<span class="p"><?php echo $this->mainNews[$i]->getLead() ?></span>
+        	</a>
+		</li>
+    	<?php endfor; ?>
+    	</ul>
+	<?php endif; ?>		
+</div>

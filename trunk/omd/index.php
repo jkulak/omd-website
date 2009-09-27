@@ -7,7 +7,7 @@ function pr( $txt )
 	echo '</pre>';
 } 
 
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 defined('ROOT_PATH')
     || define('ROOT_PATH', realpath(dirname(__FILE__) ));
@@ -26,7 +26,7 @@ set_include_path(
 	. PATH_SEPARATOR . get_include_path()
 	. PATH_SEPARATOR . '/home/hhbd/lib/external/'
 	. PATH_SEPARATOR . '/home/hhbd/lib/internal/');
-	
+
 include "Zend/Loader.php";
 
 Zend_Loader::loadClass('Zend_Controller_Front');
@@ -38,7 +38,6 @@ $frontController = Zend_Controller_Front::getInstance();
 $frontController->throwExceptions(true);
 
 $frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ) );
-//$frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ), 'omd' );
 //$frontController->setBaseUrl('/omd');
 
 $view = new Zend_View;
@@ -61,7 +60,6 @@ Zend_Layout::startMvc(
 // print_r($frontController);
 
 $router = $frontController->getRouter(); // returns a rewrite router by default
-
 $router->addRoute('kontakt', new Zend_Controller_Router_Route('kontakt.html', array('controller' => 'index', 'action' => 'kontakt')));
 $router->addRoute('onas', new Zend_Controller_Router_Route('o-nas.html', array('controller' => 'index', 'action' => 'onas')));
 $router->addRoute('aktualnosci', new Zend_Controller_Router_Route('aktualnosci.html', array('controller' => 'index', 'action' => 'aktualnosci')));
@@ -71,6 +69,10 @@ $router->addRoute('narzedzia', new Zend_Controller_Router_Route('narzedzia.html'
 $router->addRoute('analizyipublikacje', new Zend_Controller_Router_Route('analizy-i-publikacje.html', array('controller' => 'index', 'action' => 'analizyipublikacje')));
 $router->addRoute('omdschool', new Zend_Controller_Router_Route('omd-school.html', array('controller' => 'index', 'action' => 'omdschool')));
 $router->addRoute('siecomd', new Zend_Controller_Router_Route('siec-omd.html', array('controller' => 'index', 'action' => 'siecomd')));
+$router->addRoute('artykul', new Zend_Controller_Router_Route('artykul.html', array('controller' => 'index', 'action' => 'artykul')));
+$router->addRoute('barry-cupples', new Zend_Controller_Router_Route('barry-cupples.html', array('controller' => 'index', 'action' => 'barrycupples')));
+$router->addRoute('maggie-choi', new Zend_Controller_Router_Route('maggie-choi.html', array('controller' => 'index', 'action' => 'maggiechoi')));
+
 
 // run!
 try
