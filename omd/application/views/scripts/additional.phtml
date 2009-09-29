@@ -1,0 +1,21 @@
+<div class="topBlock">
+	<div class="twitter">
+		<p>
+			Sprawdź nas na <a href="http://twitter.com/optimummediaomd">
+				<img src="<?= $this->baseUrl; ?>/public/images/twitterlogo.png" alt="Logo Twittera" />
+			</a>
+		</p>
+	</div>
+	<div class="something">
+		<p>
+			Średnie CPP cennikowe w 4 stacjach głównych w sierpniu (vs sierpień 08) wzrosło o ok 6,5% (TG: 16 - 49)
+		</p>
+	</div>
+</div>
+<div class="news">
+	<h3>Aktualności</h3>
+	<?php for( $i = 0, $cnt = $this->addNews->length(); $i < $cnt; $i++ ) :?>
+		<p><?php echo $this->addNews[$i]->getLead() ?></p>
+	<?php endfor ?>
+	<!-- <p>Optimum Media OMD, pierwszy dom mediowy w Polsce, który zdobył Złotego Lwa w Cannes, jeden z pierwszych domów mediowych na polskim rynku reklamowym – teraz jako pierwszy polski dom mediowy jest obecny na www.twitter.com.</p> -->
+</div>
