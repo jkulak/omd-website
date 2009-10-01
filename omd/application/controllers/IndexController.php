@@ -6,6 +6,12 @@ require_once 'Zend/Mail/Transport/Smtp.php';
 
 class IndexController extends Zend_Controller_Action
 {
+    const MAIL_SEND_FROM_HOST  = ''; // przyklad: 'poczta.interia.pl'
+    const MAIL_SEND_FROM_USER  = ''; // przyklad: 'kotletschabowy'
+    const MAIL_SEND_FROM_PASS  = ''; // przyklad: 'haslo123'
+    const MAIL_SEND_FROM_EMAIL = ''; // przyklad: 'kotletschabowy@interia.pl'
+    const MAIL_SEND_TO_EMAIL   = ''; // przyklad: 'biuro@omd.com'
+    
 	function init()
 	{
 		$this->view->baseUrl = $this->_request->getBaseUrl();
@@ -39,16 +45,23 @@ class IndexController extends Zend_Controller_Action
             $post = $this->getRequest()->getPost();
             
             $config = array( 'auth' => 'login',
-                             'username' => '',
-                             'password' => '' );
+                             'username' => self::MAIL_SEND_FROM_USER,
+                             'password' => self::MAIL_SEND_FROM_PASS );
             
-            $transport = new Zend_Mail_Transport_Smtp( 'poczta.interia.pl', $config );
+            $transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST, $config );
 
             $mail = new Zend_Mail( 'UTF-8' );
-            $mail->setBodyText( $post['message'] );
-            $mail->setFrom( 'vas2@interia.pl', 'Vas' );
-            $mail->addTo( 'Pawel.Hajek@gmail.com', 'Odbiorca' );
-            $mail->setSubject( 'Temat' );
+            
+            $body = "Instytucja:\n" . $post['institution'];
+            $body .= "\n\nImię i nazwisko:\n" . $post['name'];
+            $body .= "\n\nE-mail:\n" . $post['email'];
+            $body .= "\n\nTelefon:\n" . $post['telephone'];
+            $body .= "\n\nWiadomość:\n" . $post['message'];            
+            
+            $mail->setBodyText( $body );
+            $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'OMD' );
+            $mail->addTo( self::MAIL_SEND_TO_EMAIL, 'OMD' );
+            $mail->setSubject( 'Nowa wiadomość' );
             try
             {
                 $mail->send( $transport );
@@ -60,7 +73,6 @@ class IndexController extends Zend_Controller_Action
             }
             $this->view->message = $message;
         }
-
     }
     
     function onasAction() {
