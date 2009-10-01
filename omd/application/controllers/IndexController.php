@@ -39,8 +39,8 @@ class IndexController extends Zend_Controller_Action
             $post = $this->getRequest()->getPost();
             
             $config = array( 'auth' => 'login',
-                             'username' => 'vas2',
-                             'password' => 'analfabeta' );
+                             'username' => '',
+                             'password' => '' );
             
             $transport = new Zend_Mail_Transport_Smtp( 'poczta.interia.pl', $config );
 
