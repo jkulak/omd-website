@@ -7,7 +7,7 @@ function pr( $txt )
 	echo '</pre>';
 } 
 
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 defined('ROOT_PATH')
     || define('ROOT_PATH', realpath(dirname(__FILE__) ));

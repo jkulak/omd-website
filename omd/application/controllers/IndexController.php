@@ -1,6 +1,8 @@
 <?php
 
-require_once 'Dupa/Article/Api.php';  
+require_once 'Dupa/Article/Api.php';
+require_once 'Zend/Mail.php';    
+require_once 'Zend/Mail/Transport/Smtp.php';
 
 class IndexController extends Zend_Controller_Action
 {
@@ -30,7 +32,35 @@ class IndexController extends Zend_Controller_Action
 	{
 	}
 
-    function kontaktAction() {
+    function kontaktAction()
+    {
+        if( $this->getRequest()->isPost() )
+        {
+            $post = $this->getRequest()->getPost();
+            
+            $config = array( 'auth' => 'login',
+                             'username' => 'vas2',
+                             'password' => 'analfabeta' );
+            
+            $transport = new Zend_Mail_Transport_Smtp( 'poczta.interia.pl', $config );
+
+            $mail = new Zend_Mail( 'UTF-8' );
+            $mail->setBodyText( $post['message'] );
+            $mail->setFrom( 'vas2@interia.pl', 'Vas' );
+            $mail->addTo( 'Pawel.Hajek@gmail.com', 'Odbiorca' );
+            $mail->setSubject( 'Temat' );
+            try
+            {
+                $mail->send( $transport );
+                $message = 'Wiadomość została wysłana.';                
+            }
+            catch( Zend_Mail_Protocol_Exception $e )
+            {
+                $message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
+            }
+            $this->view->message = $message;
+        }
+
     }
     
     function onasAction() {
