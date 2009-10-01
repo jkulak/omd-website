@@ -17,7 +17,7 @@ class Dupa_Article_Api
 	const DB_ADAPTER	= 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'hhbd_www';
+	const DB_USER		= 'www';
 	const DB_PASS		= 'www';
 	
 	/**
@@ -89,7 +89,7 @@ class Dupa_Article_Api
 		
 		if( $id > 0 )
 		{
-    		$query = 'SELECT id, title, lead, content, added, addedby, updated, updatedby, activate, deactivate, status FROM ARTICLES WHERE id = ?';
+    		$query = 'SELECT id, title, lead, content, added, addedby, updated, updatedby, activate, deactivate, status FROM articles WHERE id = ?';
     		
     		try
     		{
@@ -254,7 +254,7 @@ class Dupa_Article_Api
 	    
 	    if( $categoryId > 0 || $categoryId === null )
 	    {
-    		$list = new Dupa_List();
+	    	$list = null;
     	    
     		$start = ( $pack - 1 ) * $packSize;
     		$end = $packSize;
@@ -263,14 +263,14 @@ class Dupa_Article_Api
     		{
     		    // pobierz 
         		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
-        		         'FROM ARTICLES ' .
+        		         'FROM articles ' .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
     		}
             else
             {
         		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
-        		         'FROM ARTICLES a ' .
-        		         'INNER JOIN CATEGORIES_has_ARTICLES ac ON a.id = ac.ARTICLES_id ' .
+        		         'FROM articles a ' .
+        		         'INNER JOIN categories_has_articles ac ON a.id = ac.ARTICLES_id ' .
         		         'WHERE ac.CATEGORIES_id = ' . $categoryId . ' ' .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
             }
@@ -286,6 +286,7 @@ class Dupa_Article_Api
     
     		if( $result )
     		{
+    		    $list = new Dupa_List();
     		    for( $i = 0, $cnt = count( $result ); $i < $cnt; $i++ )
     		    {
         		    $article = new Dupa_Article_Container();

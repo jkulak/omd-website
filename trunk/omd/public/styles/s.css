@@ -39,6 +39,7 @@ img { border: 0; }
 
 .right { float:right }
 .left { float:left }
+.center { text-align:center }
 .half { width:50% }
 .full { clear:both; width:100% }
 
