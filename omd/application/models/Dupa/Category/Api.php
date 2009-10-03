@@ -16,7 +16,7 @@ class Dupa_Category_Api
 	const DB_ADAPTER    = 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'www';
+	const DB_USER		= 'hhbd_www';
 	const DB_PASS		= 'www';
 	
 	/**
@@ -81,7 +81,7 @@ class Dupa_Category_Api
 		
 		if( $id > 0 )
 		{
-    		$query = 'SELECT id, name, added, addedby, updated, updatedby FROM categories WHERE id = ?';
+    		$query = 'SELECT id, name, added, addedby, updated, updatedby FROM CATEGORIES WHERE id = ?';
     		
     		try
     		{
@@ -132,7 +132,7 @@ class Dupa_Category_Api
 
 		    try
 		    {
-    		    $result = $this->_db->insert( 'categories', $data );
+    		    $result = $this->_db->insert( 'CATEGORIES', $data );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -169,7 +169,7 @@ class Dupa_Category_Api
 
 		    try
 		    {
-    		    $result = $this->_db->update( 'categories', $data, 'id = ' . $category->getId() );
+    		    $result = $this->_db->update( 'CATEGORIES', $data, 'id = ' . $category->getId() );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -198,7 +198,7 @@ class Dupa_Category_Api
 		{
 		    try
 		    {
-    		    $result = $this->_db->delete( 'categories', 'id = ' . $id );
+    		    $result = $this->_db->delete( 'CATEGORIES', 'id = ' . $id );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -229,7 +229,7 @@ class Dupa_Category_Api
 		$end = $packSize;
 	    
 		$query = 'SELECT id, name, added, addedby, updated, updatedby ' .
-		         'FROM categories limit ' . $start .', ' . $end;
+		         'FROM CATEGORIES limit ' . $start .', ' . $end;
 		
 		try
 		{

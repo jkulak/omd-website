@@ -34,9 +34,9 @@ class Dupa_List implements ArrayAccess
         return $this->_items[$offset];
     }
     
-    public function length()
-    {
-        return count( $this->_items );
+		public function length()
+		{	
+			return (is_array($this->_items) ? count( $this->_items ) : 0);
     }    
 }
 ?>
