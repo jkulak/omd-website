@@ -17,7 +17,7 @@ class Dupa_Article_Api
 	const DB_ADAPTER	= 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'www';
+	const DB_USER		= 'hhbd_www';
 	const DB_PASS		= 'www';
 	
 	/**
@@ -89,7 +89,7 @@ class Dupa_Article_Api
 		
 		if( $id > 0 )
 		{
-    		$query = 'SELECT id, title, lead, content, added, addedby, updated, updatedby, activate, deactivate, status FROM articles WHERE id = ?';
+    		$query = 'SELECT id, title, lead, content, added, addedby, updated, updatedby, activate, deactivate, status FROM ARTICLES WHERE id = ?';
     		
     		try
     		{
@@ -151,7 +151,7 @@ class Dupa_Article_Api
 
 		    try
 		    {
-    		    $result = $this->_db->insert( 'articles', $data );
+    		    $result = $this->_db->insert( 'ARTICLES', $data );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -194,7 +194,7 @@ class Dupa_Article_Api
 
 		    try
 		    {
-    		    $result = $this->_db->update( 'articles', $data, 'id = ' . $article->getId() );
+    		    $result = $this->_db->update( 'ARTICLES', $data, 'id = ' . $article->getId() );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -223,7 +223,7 @@ class Dupa_Article_Api
 		{
 		    try
 		    {
-    		    $result = $this->_db->delete( 'articles', 'id = ' . $id );
+    		    $result = $this->_db->delete( 'ARTICLES', 'id = ' . $id );
 		    }
 			catch( Zend_Db_Exception $e )
     		{
@@ -251,10 +251,12 @@ class Dupa_Article_Api
 	    $packSize = intval( $packSize ) ? intval( $packSize ) : self::DEFAULT_PACKSIZE;
 	    $categoryId = $categoryId ? intval( $categoryId ) : $categoryId;
 	    $order = self::checkSortOrder( $order );
+	
+			$list = new Dupa_List();
 	    
 	    if( $categoryId > 0 || $categoryId === null )
 	    {
-	    	$list = null;
+	    	
     	    
     		$start = ( $pack - 1 ) * $packSize;
     		$end = $packSize;
@@ -263,14 +265,14 @@ class Dupa_Article_Api
     		{
     		    // pobierz 
         		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
-        		         'FROM articles ' .
+        		         'FROM ARTICLES ' .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
     		}
             else
             {
         		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
-        		         'FROM articles a ' .
-        		         'INNER JOIN categories_has_articles ac ON a.id = ac.ARTICLES_id ' .
+        		         'FROM ARTICLES a ' .
+        		         'INNER JOIN CATEGORIES_has_ARTICLES ac ON a.id = ac.ARTICLES_id ' .
         		         'WHERE ac.CATEGORIES_id = ' . $categoryId . ' ' .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
             }
@@ -286,7 +288,6 @@ class Dupa_Article_Api
     
     		if( $result )
     		{
-    		    $list = new Dupa_List();
     		    for( $i = 0, $cnt = count( $result ); $i < $cnt; $i++ )
     		    {
         		    $article = new Dupa_Article_Container();
