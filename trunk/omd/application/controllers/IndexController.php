@@ -189,7 +189,7 @@ class IndexController extends Zend_Controller_Action
     	    {
     	        echo $e->getMessage();
     	    }
-    
+
     	    $this->view->dates = $dates;
     	    $this->view->months = $this->_months;	
 	    }
