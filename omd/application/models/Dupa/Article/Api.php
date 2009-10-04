@@ -358,7 +358,7 @@ class Dupa_Article_Api
 	        if( !$categoryId )
     		{
         		$query = 'SELECT substring( added, 1, 4 ) as year, substring( added, 6, 2 ) as month ' .
-        		         'FROM articles ' . 
+        		         'FROM ARTICLES ' . 
         		         'GROUP BY substring( added, 1, 7 ) ' .
         		         'ORDER BY year, month desc limit ' . $start . ', ' . $end;
     		}
