@@ -122,10 +122,11 @@
         });
         
         _editForm.resetForm = function(){
-            var form = _editForm.getForm();
+        	var form = _editForm.getForm();
             form.items.each(function(item){
-                item.reset();
+            	item.setValue(null);
             });
+
             if( tinyMCE.get('contentTextarea') ) {
             	tinyMCE.get('contentTextarea').setContent(' ');
             }
@@ -154,7 +155,7 @@
         _editFormCategory.resetForm = function(){
             var form = _editFormCategory.getForm();
             form.items.each(function(item){
-                item.reset();
+            	item.setValue(null);
             });
         };
 
@@ -356,7 +357,7 @@
                     fn: function( e ){
                         if( e == 'yes' ) {
                         	Ext.MessageBox.wait( 'Usuwam...', 'Proszę czekać' );
-                        	
+                        	var isSet666code = false;
                         	var remove = function( a ) {
                             	Ext.Ajax.request({
                           		   url: Omd.apiUrl + 'index/delcategory',
@@ -365,17 +366,21 @@
                             		  var ei = a-1;
 
                             		  if( ( code == 666 ) && ( a != selected.length ) ) {
+                            			  isSet666code = true;
                             			  Ext.MessageBox.hide();
                             			  Ext.MessageBox.alert( 'Informacja', 'Kategoria <b>' + selected[ei].data.name + '</b> nie została usunięta ponieważ jest powiązana z artykułami.' );
                             		  } else if( ( code == 666 ) && ( a == selected.length ) ) { 
-                             			  Ext.MessageBox.hide();
+                            			  isSet666code = true;
+                            			  Ext.MessageBox.hide();
                              			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie, poza kategorią <b>' + selected[ei].data.name + '</b>, ponieważ ta jest powiązana z artykułami' : 'Kategoria <b>' + selected[ei].data.name + '</b> nie została usunięta ponieważ jest powiązana z artykułami.' )
                              			  _store.categoryList.reload();
                             		  } else {
 	                             		  if( a == selected.length ) {
-	                             			  Ext.MessageBox.hide();
-	                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie' : 'Usunięto wybraną kategorię' )
-	                             			  _store.categoryList.reload();
+	                             			  if( !isSet666code ) {
+		                             			  Ext.MessageBox.hide();
+		                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie' : 'Usunięto wybraną kategorię' )
+	                             			  }
+	                             			 _store.categoryList.reload();
 	                             		  }
                             		  }
                           		   },
