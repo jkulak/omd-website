@@ -62,6 +62,8 @@ img { border: 0; }
 
 .picture {margin-bottom: 10px;}
 
+.date { font-size:11px; color:#777 }
+
 div.paragraph { margin:0 0 25px }
 
 /* Layout */
@@ -248,9 +250,14 @@ div.paragraph { margin:0 0 25px }
 	color: #FC0026;
 }
 
+ul.news span { width:auto }
+ul.news .p { margin:0 }
+ul.news li { margin:0 0 10px }
+ul.news .date { display:block; margin:0 0 5px; }
 ul.news a { text-decoration:none }
 ul.news a:hover { text-decoration:none }
 ul.news a:hover span.h3 { text-decoration:underline }
+ul.news p a:hover { text-decoration:underline }
 
 .zespol .element img {
 	margin-right: 10px;
@@ -264,3 +271,7 @@ ul.news a:hover span.h3 { text-decoration:underline }
 .naszePrace .praca ul { padding:0 0 0 20px; list-style-type:square }
 .naszePrace a { text-decoration:none }
 
+.article .date { }
+
+p.back a { text-decoration:none }
+p.back a:hover { text-decoration:underline }
