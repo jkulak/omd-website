@@ -9,13 +9,13 @@ class IndexController extends Zend_Controller_Action
    		/**
    		 * #TODO gdzie jest config?
    		 */
-		//$this->view->publicUrl = 'http://webascrazy.net/omdform/public/';
-		$this->view->publicUrl = 'http://localhost/omdweb/omdweb/omdform/public/';
+		$this->view->publicUrl = 'http://webascrazy.net/omdform/public/';
+		//$this->view->publicUrl = 'http://localhost/omdweb/omdweb/omdform/public/';
 		
-		//$this->view->apiUrl = 'http://webascrazy.net/omdform/';
-		$this->view->apiUrl = 'http://localhost/omdweb/omdweb/omdform/';
+		$this->view->apiUrl = 'http://webascrazy.net/omdform/';
+		//$this->view->apiUrl = 'http://localhost/omdweb/omdweb/omdform/';
    			   	
-		$this->view->title = "Panel administracyjny OMD, czyli super formatka ExtJS od Stanioka! Yeah."; 
+		$this->view->title = "Panel administracyjny OMD"; 
 	
 		
 		
@@ -24,12 +24,12 @@ class IndexController extends Zend_Controller_Action
 		$this->_apiCategories = Dupa_Category_Api::getInstance();
 	}
 	
-	public function _res( $success = true, $id = 0, $data = "[]" ) {
+	public function _res( $success = true, $id = 0, $data = "[]", $code = 0 ) {
 		
 		if( $success ) {
-			$ret = '{ success : "true", id : '.$id.', data : '.$data.' }';
+			$ret = '{ success : "true", id : '.$id.', data : '.$data.', code : '.$code.' }';
 		} else {
-			$ret = '{ success : "false", id : '.$id.', data : '.$data.' }';
+			$ret = '{ success : "false", id : '.$id.', data : '.$data.', code : '.$code.' }';
 		}
 		
 		return $ret;
@@ -51,7 +51,6 @@ class IndexController extends Zend_Controller_Action
     	    $article = new Dupa_Article_Container();
     	    
     	    $articleId = $this->_request->getPost( 'id', null );
-    	    
     	    $article->setId( $articleId );
     	    $article->setTitle( $this->_request->getPost( 'title', null ) );
     	    $article->setLead( $this->_request->getPost( 'lead', null ) );
@@ -152,10 +151,10 @@ class IndexController extends Zend_Controller_Action
 		if( $list ) {
 			foreach( $list as $value ) {
 				//Zend_Debug::dump( $value );
-				$items['result']['items'][$i]['id']      = $value->getId();
-				$items['result']['items'][$i]['title']   = $value->getTitle();
-				$items['result']['items'][$i]['addedby'] = $value->getAddBy();
-				$items['result']['items'][$i]['status']  = $value->getStatus();
+				$items['result']['items'][$i]['id']      	  = $value->getId();
+				$items['result']['items'][$i]['title']   	  = $value->getTitle();
+				$items['result']['items'][$i]['categoryName'] = $value->getCategoryName();
+				$items['result']['items'][$i]['status']  	  = $value->getStatus();
 				
 				$i++;
 			}
@@ -199,9 +198,13 @@ class IndexController extends Zend_Controller_Action
 		
 		$id = $this->_request->getPost( 'id', null );
 		
-		$this->_apiCategories->delCategory( $id );
+		$ret = $this->_apiCategories->delCategory( $id );
 		
-		echo $this->_res( true );
+		if( $ret == 666 ) {
+			echo $this->_res( true, 0, '[]', 666 );
+		} else {
+			echo $this->_res( true );
+		}
 	}
 	
 	

@@ -41,9 +41,9 @@
             items       : [
                 { fieldLabel : 'Id', xtype :'textfield', id : 'articleid', name:'id', width: 60, readOnly : true },
                 { allowBlank : false, fieldLabel : 'Tytuł', xtype :'textfield' ,name:'title' },
-                { allowBlank : false, fieldLabel : 'Lead', xtype :'textarea' ,name:'lead' },
-                { allowBlank : false, fieldLabel : 'Data aktywacji', xtype :'datefield' ,name:'activate', width: 180, format: 'Y-m-d H:i:s' },
-                { allowBlank : false, fieldLabel : 'Data deaktywacji', xtype :'datefield' ,name:'deactivate', width: 180, format: 'Y-m-d H:i:s' },
+                { fieldLabel : 'Lead', xtype :'textarea' ,name:'lead' },
+                { fieldLabel : 'Data aktywacji', xtype :'datefield' ,name:'activate', width: 180, format: 'Y-m-d H:i:s' },
+                { fieldLabel : 'Data deaktywacji', xtype :'datefield' ,name:'deactivate', width: 180, format: 'Y-m-d H:i:s' },
                 { fieldLabel : 'Content', id : 'contentTextarea', xtype :'textarea' ,name:'content', height : 600, listeners : {
                     render : function() {
                         tinyMCE.init({
@@ -115,7 +115,8 @@
                     selectOnFocus : true,
                     store : _store.status,
                     width : 100,
-                    ctCls : 'filed'
+                    ctCls : 'filed',
+                    allowBlank : false
                 }
             ]      
         });
@@ -162,6 +163,8 @@
     var _initControler = function() {
     	_controler.add = function() {
     		_editForm.resetForm();
+    		_editForm.getForm().setValues({ status2 : 'disabled' });
+    		
     		_view.toggleEditMode( true, false );
     	}
     	
@@ -188,6 +191,10 @@
             				   category : data.data.category,
             				   status2 : data.data.status
             			   });
+            			   
+            	            if( tinyMCE.get('contentTextarea') ) {
+            	            	tinyMCE.get('contentTextarea').setContent(data.data.content);
+            	            }
 
             			   _view.toggleEditMode();
             		   },
@@ -354,11 +361,23 @@
                             	Ext.Ajax.request({
                           		   url: Omd.apiUrl + 'index/delcategory',
                           		   success: function( ret, res ){
-                             		  if( a == selected.length ) {
+                            		  var code = Ext.util.JSON.decode( ret.responseText ).code;
+                            		  var ei = a-1;
+
+                            		  if( ( code == 666 ) && ( a != selected.length ) ) {
+                            			  Ext.MessageBox.hide();
+                            			  Ext.MessageBox.alert( 'Informacja', 'Kategoria <b>' + selected[ei].data.name + '</b> nie została usunięta ponieważ jest powiązana z artykułami.' );
+                            		  } else if( ( code == 666 ) && ( a == selected.length ) ) { 
                              			  Ext.MessageBox.hide();
-                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie' : 'Usunięto wybraną kategorię' )
+                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie, poza kategorią <b>' + selected[ei].data.name + '</b>, ponieważ ta jest powiązana z artykułami' : 'Kategoria <b>' + selected[ei].data.name + '</b> nie została usunięta ponieważ jest powiązana z artykułami.' )
                              			  _store.categoryList.reload();
-                             		  }
+                            		  } else {
+	                             		  if( a == selected.length ) {
+	                             			  Ext.MessageBox.hide();
+	                             			  Ext.MessageBox.alert( 'Informacja', ( selected.length > 1 ) ? 'Usunięto wybrane kategorie' : 'Usunięto wybraną kategorię' )
+	                             			  _store.categoryList.reload();
+	                             		  }
+                            		  }
                           		   },
                           		   failure: function(){
                           		   },
@@ -631,7 +650,7 @@
             }, {
                 header: _lang.gridTitleItemTitle, width: 100, sortable: true, dataIndex: 'title'
             }, {
-            	header: _lang.gridTitleItemAddedby, width: 50, sortable: true, dataIndex: 'addedby'
+            	header: _lang.gridTitleItemCategory, width: 50, sortable: true, dataIndex: 'categoryName'
             }, {
                 header: _lang.gridTitleItemStatus, width: 50, sortable: true, dataIndex: 'status'
             }],
@@ -656,9 +675,9 @@
                 header: _lang.gridTitleItemId, width: 30,  sortable: true, dataIndex: 'id'
             }, {
                 header: _lang.gridTitleItemTitle, width: 200, sortable: true, dataIndex: 'name'
-            }, {
+            }/*, {
             	header: _lang.gridTitleItemAddedby, width: 100, sortable: true, dataIndex: 'addedby'
-            }],
+            }*/],
             stripeRows: true,
             autoHeight :true,
             width: '100%',

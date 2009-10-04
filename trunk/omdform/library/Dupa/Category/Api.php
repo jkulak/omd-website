@@ -11,9 +11,10 @@ class Dupa_Category_Api
 	const DB_ADAPTER    = 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'root';
-	const DB_PASS		= '';
+	const DB_USER		= 'hhbd_www';
+	const DB_PASS		= 'www';
 	const DB_TABLE      = 'CATEGORIES';
+	const DB_TABLE_REL  = 'CATEGORIES_has_ARTICLES';
 	
 	/**
 	 * Domyslne wartosci paczkowania
@@ -194,7 +195,12 @@ class Dupa_Category_Api
 		{
 		    try
 		    {
-    		    $result = $this->_db->delete( self::DB_TABLE, 'id = ' . $id );
+		    	$hasArticle = $this->_db->fetchAll( 'SELECT * FROM '.self::DB_TABLE_REL.' WHERE CATEGORIES_id = ' . $id .' LIMIT 1' );
+		    	if( isSet( $hasArticle[0] ) ) {
+		    		return 666;
+		    	} else {
+    		    	$result = $this->_db->delete( self::DB_TABLE, 'id = ' . $id );
+				}
 		    }
 			catch( Zend_Db_Exception $e )
     		{

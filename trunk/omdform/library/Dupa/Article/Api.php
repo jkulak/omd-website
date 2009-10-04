@@ -16,8 +16,8 @@ class Dupa_Article_Api
 	const DB_ADAPTER	= 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
-	const DB_USER		= 'root';
-	const DB_PASS		= '';
+	const DB_USER		= 'hhbd_www';
+	const DB_PASS		= 'www';
 	const DB_TABLE      = 'ARTICLES';
 	const DB_TABLE_REL  = 'CATEGORIES_has_ARTICLES';
 	
@@ -46,6 +46,7 @@ class Dupa_Article_Api
 		{
 			$this->_db = Zend_Db::factory( self::DB_ADAPTER, $params );
 			$this->_db->getConnection();
+			$this->_db->query( 'SET NAMES utf8' );
 		}
 		catch( Zend_Db_Adapter_Exception $e )
 		{
@@ -274,8 +275,11 @@ class Dupa_Article_Api
 		$start = ( $pack - 1 ) * $packSize;
 		$end = $packSize;
 	    
-		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
-		         'FROM ' . self::DB_TABLE . '  ORDER by id DESC limit ' . $start .', ' . $end;
+		$query = 'SELECT ct.name AS category, ar.id, ar.title, ar.lead, ar.added, ar.addedby, ar.updated, ar.updatedby, ar.activate, ar.deactivate, ar.status ' .
+		         'FROM ' . self::DB_TABLE . ' ar ' .
+				 'LEFT JOIN CATEGORIES_has_ARTICLES cha ON  ar.id = cha.ARTICLES_id ' .
+				 'LEFT JOIN CATEGORIES ct ON cha.CATEGORIES_id = ct.id ' .
+		         'ORDER by id DESC limit ' . $start .', ' . $end;
 		
 		try
 		{
@@ -283,7 +287,7 @@ class Dupa_Article_Api
 		}		
 		catch( Zend_Db_Exception $e )
 		{
-		    throw new Dupa_Exception( 'Error getting articles list', Dupa_Exception::ERROR_DB );
+			throw new Dupa_Exception( 'Error getting articles list', Dupa_Exception::ERROR_DB );
 		}
 
 		if( $result )
@@ -303,6 +307,7 @@ class Dupa_Article_Api
     		    $article->setEnableDate( $result[$i]['activate'] );
     		    $article->setDisableDate( $result[$i]['deactivate'] );
     		    $article->setStatus( $result[$i]['status'] );
+    		    $article->setCategoryName( $result[$i]['category'] );
     		    
     		    $list[$i] = $article;
 		    }
@@ -314,6 +319,7 @@ class Dupa_Article_Api
 	public function getArticlesCnt()
 	{
 		$query = 'SELECT COUNT(*) as rows FROM ' . self::DB_TABLE;
+
 		try
 		{
 

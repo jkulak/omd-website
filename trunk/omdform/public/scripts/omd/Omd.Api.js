@@ -12,7 +12,7 @@
      	}, [
      		{name: 'id'},
      		{name: 'title'},
-     		{name: 'addedby'},
+     		{name: 'categoryName'},
      		{name: 'status'}
      	])
     });
