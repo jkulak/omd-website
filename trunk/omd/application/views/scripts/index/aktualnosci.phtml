@@ -5,7 +5,7 @@
     	<ul class="news">
     	<?php for( $i = 0, $cnt = $this->mainNews->length(); $i < $cnt; $i++ ) :?>
     	<li>
-        	<a href="/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
+        	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
         		<span class="h3"><?php echo $this->mainNews[$i]->getTitle() ?></span>
         		<span class="date"><?php echo $this->mainNews[$i]->getAddDate() ?></span>
         		<?php if( $i < 3 ) : ?>
