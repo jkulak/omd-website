@@ -379,8 +379,19 @@ class Dupa_Article_Api
     		{
     		    throw new Dupa_Exception( 'Error getting articles dates: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
     		}
+    		
+    		for( $i = 0, $cnt = count( $result ); $i < $cnt; $i++ )
+    		{
+    		    if( $result[$i]['year'] && $result[$i]['month'] )
+    		    {
+    		        $list[$i]['year'] = $result[$i]['year'];
+    		        $list[$i]['month'] = $result[$i]['month'];
+    		    }
+    		}
+            $list->cntItems = $list->length();
 	    }
-	    return $result;
+
+	    return $list;
 	}
 	
     static public function checkSortOrder( $sortOrder )

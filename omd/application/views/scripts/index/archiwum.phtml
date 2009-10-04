@@ -3,7 +3,7 @@
 
 	<h2>Archiwum</h2>
 	
-	<?php if( $this->archive->cntItems ) : ?>
+	<?php if( $this->archive && $this->archive->cntItems ) : ?>
     	<ul class="news">
     	<?php for( $i = 0, $cnt = $this->archive->length(); $i < $cnt; $i++ ) :?>
     	<li>
@@ -17,7 +17,7 @@
 		</li>
     	<?php endfor; ?>
     	</ul>
-	<?php elseif( count( $this->dates ) ) : ?>
+	<?php elseif( $this->dates && $this->dates->cntItems ) : ?>
     	<ul class="news">
     	<?php for( $i = 0, $cnt = count( $this->dates ); $i < $cnt; $i++ ) :?>
     	<li>
