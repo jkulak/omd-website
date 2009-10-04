@@ -1,5 +1,8 @@
 <?php
 
+ini_set("magic_quotes_gpc", "0");
+set_magic_quotes_runtime(1);
+
 try{
 ini_set('display_errors', 1);
 error_reporting(E_ALL|E_STRICT);
