@@ -85,4 +85,6 @@
 	//text z tooltipa dla buttona usuń kategorie
 	_lang.toolbarTextDeleteCategory = 'Kliknij aby usunąć kategorie';
 
+	_lang.gridTitleItemCategory = 'Kategoria';
+
 })();

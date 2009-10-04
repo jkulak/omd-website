@@ -99,11 +99,28 @@ class Dupa_Article_Container
 	private $_category;
 	
 	/**
+	 * Name kategrii
+	 * 
+	 * @var Int
+	 */
+	private $_categoryName;
+	
+	/**
 	 * Konstruktor
 	 * 
 	 * @return Dupa_Article_Container
 	 */
 	function __construct() { }
+	
+	public function setCategoryName( $categoryName )
+    {
+        $this->_categoryName = $categoryName;
+    }
+
+	public function getCategoryName()
+    {
+        return $this->_categoryName;
+    }
 	
 	public function setCategory( $category )
     {
