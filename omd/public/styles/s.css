@@ -158,7 +158,7 @@ div.paragraph { margin:0 0 25px }
 
 .halfMain {
 	float: left;
-	width: 280px;
+	width: 335px;
 	margin: 0 10px 10px 0;
 }
 
@@ -191,7 +191,7 @@ div.paragraph { margin:0 0 25px }
 }
 
 #additional .topBlock{
-	min-height:268px;
+	min-height:250px;
 	margin-top: 18px;
 }
 
