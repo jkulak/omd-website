@@ -6,7 +6,14 @@
  * @author Playah
  */
 class Dupa_List implements ArrayAccess
-{
+{    
+    /**
+     * Ilosc elementow na liscie
+     * 
+     * @var unknown_type
+     */
+    public $cntItems;
+    
     /**
      * Lista elementow
      * 
@@ -14,6 +21,7 @@ class Dupa_List implements ArrayAccess
      */
     protected $_items;
 
+    
     public function offsetSet( $offset, $value )
     {
         $this->_items[$offset] = $value;

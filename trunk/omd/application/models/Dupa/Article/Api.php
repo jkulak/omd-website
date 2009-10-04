@@ -242,31 +242,43 @@ class Dupa_Article_Api
 	 * @param int $categoryId Id kategorii; jezeli nie podano - pobierz ze wszystkich
 	 * @param int $pack Numer paczki
 	 * @param int $packSize Wielkosc paczki
+	 * @param string $order Sortowanie
+	 * @param string $year Rok, z ktorego pobierac artykuly (nalezy podawac tez $month)
+	 * @param string $month Miesiac, z ktorego pobierac artykul (nalezy podawac tez $year)
 	 * 
 	 * @return Dupa_List
 	 */
-	public function getArticlesList( $categoryId = null, $pack = null, $packSize = null, $order = null )
+	public function getArticlesList( $categoryId = null, $pack = null, $packSize = null, $order = null, $year = null, $month = null )
 	{
 	    $pack = intval( $pack ) ? intval( $pack ) : self::DEFAULT_PACK;
 	    $packSize = intval( $packSize ) ? intval( $packSize ) : self::DEFAULT_PACKSIZE;
 	    $categoryId = $categoryId ? intval( $categoryId ) : $categoryId;
 	    $order = self::checkSortOrder( $order );
-	
-			$list = new Dupa_List();
+	    
+	    if( $year && $month )
+	    {
+    	    $year = intval( $year );
+    	    $month = intval( $month );
+    	    $month = $month < 10 ? '0' . strval( $month ) : strval( $month );
+    	    $date = $year . '-' . $month;
+	    }
+	    
+		$list = new Dupa_List();
 	    
 	    if( $categoryId > 0 || $categoryId === null )
-	    {
-	    	
-    	    
+	    {    	    
     		$start = ( $pack - 1 ) * $packSize;
     		$end = $packSize;
     		
     		if( !$categoryId )
     		{
-    		    // pobierz 
         		$query = 'SELECT id, title, lead, added, addedby, updated, updatedby, activate, deactivate, status ' .
         		         'FROM ARTICLES ' .
+        		         ( isset( $date ) ? 'WHERE substring( added, 1, 7 ) = "' . $date . '" ': '' ) .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
+        		$queryCnt = 'SELECT count(*) as cnt ' .
+            		        'FROM ARTICLES ' .
+            		        ( isset( $date ) ? 'WHERE substring( added, 1, 7 ) = "' . $date . '" ': '' );
     		}
             else
             {
@@ -274,12 +286,19 @@ class Dupa_Article_Api
         		         'FROM ARTICLES a ' .
         		         'INNER JOIN CATEGORIES_has_ARTICLES ac ON a.id = ac.ARTICLES_id ' .
         		         'WHERE ac.CATEGORIES_id = ' . $categoryId . ' ' .
+        		         ( isset( $date ) ? 'AND substring( added, 1, 7 ) = "' . $date . '" ': '' ) .
         		         'ORDER by id ' . $order . ' limit ' . $start . ', ' . $end;
+        		$queryCnt = 'SELECT count(*) as cnt ' .
+            		        'FROM ARTICLES a ' .
+            		        'INNER JOIN CATEGORIES_has_ARTICLES ac ON a.id = ac.ARTICLES_id ' .
+            		        'WHERE ac.CATEGORIES_id = ' . $categoryId . ' ' .
+            		        ( isset( $date ) ? 'AND substring( added, 1, 7 ) = "' . $date . '" ': '' );
             }
     		
     		try
     		{
     		    $result = $this->_db->fetchAll( $query );
+    		    $resultCnt = $this->_db->fetchAll( $queryCnt );
     		}		
     		catch( Zend_Db_Exception $e )
     		{
@@ -305,12 +324,65 @@ class Dupa_Article_Api
         		    
         		    $list[$i] = $article;
     		    }
+    		    $list->cntItems = $resultCnt[0]['cnt'];
     		}
 	    }
-	    
+		else
+		    throw new Dupa_Exception( 'Error getting articles list', Dupa_Exception::ERROR_VALIDATE );
+		    
 		return $list;
 	}
-
+	
+	/**
+	 * Pobranie listy dat, z kiedy pochodza artykuly
+	 * 
+	 * @param int $categoryId Id kategorii; jezeli nie podano - pobierz ze wszystkich
+	 * @param int $pack Numer paczki
+	 * @param int $packSize Wielkosc paczki
+	 * 
+	 * @return Dupa_List
+	 */
+	public function getArticlesDates( $categoryId = null, $pack = null, $packSize = null )
+	{
+	    $pack = intval( $pack ) ? intval( $pack ) : self::DEFAULT_PACK;
+	    $packSize = intval( $packSize ) ? intval( $packSize ) : self::DEFAULT_PACKSIZE;
+	    $categoryId = $categoryId ? intval( $categoryId ) : $categoryId;
+	
+		$list = new Dupa_List();
+	    
+	    if( $categoryId > 0 || $categoryId === null )
+	    {    	    
+    		$start = ( $pack - 1 ) * $packSize;
+    		$end = $packSize;
+    		
+	        if( !$categoryId )
+    		{
+        		$query = 'SELECT substring( added, 1, 4 ) as year, substring( added, 6, 2 ) as month ' .
+        		         'FROM articles ' . 
+        		         'GROUP BY substring( added, 1, 7 ) ' .
+        		         'ORDER BY year, month desc limit ' . $start . ', ' . $end;
+    		}
+            else
+            {
+        		$query = 'SELECT substring( added, 1, 4 ) as year, substring( added, 6, 2 ) as month ' .
+        		         'FROM articles a ' .
+        		         'INNER JOIN CATEGORIES_has_ARTICLES ac ON a.id = ac.ARTICLES_id ' .
+        		         'WHERE ac.CATEGORIES_id = ' . $categoryId . ' ' .
+        		         'GROUP BY substring( added, 1, 7 ) ' .
+        		         'ORDER BY year, month desc limit ' . $start . ', ' . $end;
+            }
+    		try
+    		{
+    		    $result = $this->_db->fetchAll( $query );
+    		}		
+    		catch( Zend_Db_Exception $e )
+    		{
+    		    throw new Dupa_Exception( 'Error getting articles dates: ' . $e->getMessage(), Dupa_Exception::ERROR_DB );
+    		}
+	    }
+	    return $result;
+	}
+	
     static public function checkSortOrder( $sortOrder )
     {
         return in_array( $sortOrder, array( self::SORT_ORDER_ASC,

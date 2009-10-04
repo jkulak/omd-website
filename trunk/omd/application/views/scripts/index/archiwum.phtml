@@ -1,0 +1,31 @@
+<div class="aktualnosci">
+	<?php if( $this->archive ) : ?><p class="back"><a href="archiwum.html">&laquo; wstecz</a></p><?php endif; ?>
+
+	<h2>Archiwum</h2>
+	
+	<?php if( $this->archive ) : ?>
+    	<ul class="news">
+    	<?php for( $i = 0, $cnt = $this->archive->length(); $i < $cnt; $i++ ) :?>
+    	<li>
+        	<a href="/artykul.html?id=<?php echo $this->archive[$i]->getId(); ?>">
+        		<span class="h3"><?php echo $this->archive[$i]->getTitle() ?></span>
+        		<span class="date"><?php echo $this->archive[$i]->getAddDate() ?></span>
+        		<?php if( $i < 3 ) : ?>
+        			<span class="p"><?php echo $this->archive[$i]->getLead() ?></span>
+        		<?php endif; ?>
+        	</a>
+		</li>
+    	<?php endfor; ?>
+    	</ul>
+	<?php elseif( $this->dates ) : ?>
+    	<ul class="news">
+    	<?php for( $i = 0, $cnt = count( $this->dates ); $i < $cnt; $i++ ) :?>
+    	<li>
+    		<p>
+        		<a href="/archiwum.html?date=<?php echo $this->dates[$i]['year'] . '-' . $this->dates[$i]['month'] ?>"><?php echo $this->months[$this->dates[$i]['month']] . ' ' . $this->dates[$i]['year'] ?></a>
+        	</p>
+		</li>
+    	<?php endfor; ?>
+    	</ul>
+	<?php endif; ?>		
+</div>

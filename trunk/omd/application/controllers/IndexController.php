@@ -12,6 +12,20 @@ class IndexController extends Zend_Controller_Action
     const MAIL_SEND_FROM_EMAIL = ''; // przyklad: 'kotletschabowy@interia.pl'
     const MAIL_SEND_TO_EMAIL   = ''; // przyklad: 'biuro@omd.com'
     
+    private $_months = array( '01' => 'Styczen',
+                              '02' => 'Luty',
+                              '03' => 'Marzec',
+                              '04' => 'Kwiecien',
+                              '05' => 'Maj',
+                              '06' => 'Czerwiec',
+                              '07' => 'Lipiec',
+                              '08' => 'Sierpien',
+                              '09' => 'Wrzesien',
+                              '10' => 'Pazdziernik',
+                              '11' => 'Listopad',
+                              '12' => 'Grudzien'    
+                             );
+    
 	function init()
 	{
 		$this->view->baseUrl = $this->_request->getBaseUrl();
@@ -25,6 +39,8 @@ class IndexController extends Zend_Controller_Action
 	        $packSize = 1;
 	        $sort = Dupa_Article_Api::SORT_ORDER_DESC;
 	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $sort );
+
+	        $ArticlesApi->getArticlesList( null, null, null, null, '2009', '11' );
 	    }
 	    catch( Exception $e )
 	    {
@@ -87,7 +103,8 @@ class IndexController extends Zend_Controller_Action
 	        $categoryId = null;
 	        $pack = 1;
 	        $packSize = 5;
-	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize );
+	        $order = Dupa_Article_Api::SORT_ORDER_DESC;
+	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $order );
 	    }
 	    catch( Exception $e )
 	    {
@@ -125,10 +142,10 @@ class IndexController extends Zend_Controller_Action
 	{	    
 	    $ArticlesApi = Dupa_Article_Api::getInstance();
 	    
+	    $articleId = intval( $this->getRequest()->getQuery( 'id' ) );
+	    
 	    try
 	    {
-	        $articleId = 2;
-
             $article = $ArticlesApi->getArticle( $articleId );
 	    }
 	    catch( Exception $e )
@@ -139,11 +156,42 @@ class IndexController extends Zend_Controller_Action
 	    $this->view->article = $article;
 	}
 	
-	function barrycupplesAction()
+	function archiwumAction()
 	{
+	    $ArticlesApi = Dupa_Article_Api::getInstance();
+
+	    // jezeli wybrano juz date
+	    if( $date = $this->getRequest()->getQuery( 'date' ) )
+	    {
+    	    try
+    	    {
+    	        $categoryId = null;
+    	        $pack = 1;
+    	        $packSize = 5;
+    	        $order = Dupa_Article_Api::SORT_ORDER_DESC;
+    	        $dates = explode( '-', $date );
+    	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $order, $dates[0], $dates[1] );
+    	    }
+    	    catch( Exception $e )
+    	    {
+    	        echo $e->getMessage();
+    	    }
+    
+    	    $this->view->archive = $articles;
+	    }
+	    else
+	    {
+    	    try
+    	    {
+    	        $dates = $ArticlesApi->getArticlesDates();
+    	    }
+    	    catch( Exception $e )
+    	    {
+    	        echo $e->getMessage();
+    	    }
+    
+    	    $this->view->dates = $dates;
+    	    $this->view->months = $this->_months;	
+	    }
 	}
-	
-	function maggiechoiAction()
-	{
-	}	
 }

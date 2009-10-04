@@ -69,6 +69,8 @@ $router->addRoute('narzedzia', new Zend_Controller_Router_Route('narzedzia.html'
 $router->addRoute('analizyipublikacje', new Zend_Controller_Router_Route('analizy-i-publikacje.html', array('controller' => 'index', 'action' => 'analizyipublikacje')));
 $router->addRoute('omdschool', new Zend_Controller_Router_Route('omd-school.html', array('controller' => 'index', 'action' => 'omdschool')));
 $router->addRoute('siecomd', new Zend_Controller_Router_Route('siec-omd.html', array('controller' => 'index', 'action' => 'siecomd')));
+$router->addRoute('artykul', new Zend_Controller_Router_Route('artykul.html', array('controller' => 'index', 'action' => 'artykul')));
+$router->addRoute('archiwum', new Zend_Controller_Router_Route('archiwum.html', array('controller' => 'index', 'action' => 'archiwum')));
 
 // run!
 try
