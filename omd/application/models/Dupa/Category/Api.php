@@ -13,7 +13,7 @@ require_once 'Dupa/List.php';
  */
 class Dupa_Category_Api
 {
-	const DB_ADAPTER    = 'Pdo_Mysql';
+	const DB_ADAPTER = 'Pdo_Mysql';
 	const DB_HOST		= 'localhost';
 	const DB_NAME		= 'hhbd_omd';
 	const DB_USER		= 'hhbd_www';
@@ -36,10 +36,12 @@ class Dupa_Category_Api
 	 */
 	private function __construct()
 	{
+		$pdoParams = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8;');
 		$params = array( 'host'		=> self::DB_HOST,
 						 'dbname'	=> self::DB_NAME,
 						 'username'	=> self::DB_USER,
-						 'password'	=> self::DB_PASS );
+						 'password'	=> self::DB_PASS,
+						'driver_options' => $pdoParams);
 		try
 		{
 			$this->_db = Zend_Db::factory( self::DB_ADAPTER, $params );
