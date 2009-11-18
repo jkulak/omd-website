@@ -3,6 +3,7 @@
 require_once 'Dupa/Article/Api.php';
 require_once 'Zend/Mail.php';    
 require_once 'Zend/Mail/Transport/Smtp.php';
+require_once 'Dupa/Service/Api/Twitter.php';
 
 class IndexController extends Zend_Controller_Action
 {
@@ -48,6 +49,16 @@ class IndexController extends Zend_Controller_Action
 	    }
 	    
 	    $this->view->addNews = $articles;
+	
+		// pobranie wpisu z tweetera
+		$twitterApi = new Phly_Twitter('', '');
+		$params = array(
+			'id' => 'OptimumMediaOMD',
+			'count' => 3
+			);
+		$response = $twitterApi->statusUserTimeline($params);
+		$tweet = $response->status[rand(0, 2)]->text;
+		$this->view->tweet = $tweet;
 	} 
    
 	function indexAction()

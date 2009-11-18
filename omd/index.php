@@ -1,5 +1,4 @@
 <?php
-
 function pr( $txt )
 {
 	echo '<pre style="float:left; clear:both; width:100%; font-size:11px; color:#004871; background:#eaf7ff; border:1px solid #0089d7">';
