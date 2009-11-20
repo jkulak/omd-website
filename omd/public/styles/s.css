@@ -8,9 +8,9 @@
 /* Mods */
 
 body {
-	font-family: Verdana, "MS Trebuchet", sans-serif;
+	font-family: Arial, Verdana, "MS Trebuchet", sans-serif;
 	color: black;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 0;
 }
 
@@ -55,6 +55,18 @@ img { border: 0; }
 	color: red;
 }
 
+.uppercase {
+	text-transform: uppercase;
+}
+
+.big {
+	font-size: 16px
+}
+
+.italic {
+	font-style: italic;
+}
+
 .element {
 	margin-bottom: 15px;
 	float: left;
@@ -93,13 +105,13 @@ div.paragraph { margin:0 0 25px }
 
 #navigation ul li {
 	display: inline;
-	margin-right: 11px;
+	margin-right: 47px;
 }
 
 #navigation ul li.first { margin:0; }
 
 #navigation ul li.second {
-	margin: 0 86px 0 0;
+	margin: 0 93px 0 0;
 }
 
 #navigation ul li.last {
@@ -158,8 +170,8 @@ div.paragraph { margin:0 0 25px }
 
 .halfMain {
 	float: left;
-	width: 335px;
-	margin: 0 10px 10px 0;
+	width: 325px;
+	margin: 0 10px 10px 10px;
 }
 
 .contact {
