@@ -8,9 +8,9 @@
 /* Mods */
 
 body {
-	font-family: Arial, Verdana, "MS Trebuchet", sans-serif;
+	font-family: Arial,Helvetica,sans-serif;
 	color: black;
-	font-size: 13px;
+	font-size: 11px;
 	font-weight: 0;
 }
 
@@ -81,7 +81,7 @@ div.paragraph { margin:0 0 25px }
 /* Layout */
 #site {
 	float: left;
-	width: 910px;
+	width: 100%;
 }
 
 /* Header */
@@ -97,7 +97,7 @@ div.paragraph { margin:0 0 25px }
 /* Navigation */
 
 #navigation {
-	background: #2D414A;
+	background: #41525C;
 	padding: 4px 0 5px 0;
 	width: 100%;
 	float: left;
@@ -105,7 +105,7 @@ div.paragraph { margin:0 0 25px }
 
 #navigation ul li {
 	display: inline;
-	margin-right: 47px;
+	margin-right: 40px;
 }
 
 #navigation ul li.first { margin:0; }
@@ -119,13 +119,12 @@ div.paragraph { margin:0 0 25px }
 }
 
 #navigation ul li a {
-	font-size: 14px;
 	color: white;
 	text-decoration: none;
 }
 
 #navigation ul li a:hover {
-	color: #FC0026;
+	color: #E7E5D0;
 }
 
 #navigation li.first a {
@@ -194,11 +193,11 @@ div.paragraph { margin:0 0 25px }
 /* Additional column */
 #additional {
 	float: left;
-	width: 200px;
+	width: 130px;
 	margin:0 0 -10000px;
 	padding:0 0 10000px;
 	ovreflow:hidden;
-	background: #FC0026;
+	background: #E51837;
 	color: white;
 }
 
