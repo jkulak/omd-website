@@ -111,7 +111,7 @@ class IndexController extends Zend_Controller_Action
 	    
 	    try
 	    {
-	        $categoryId = null;
+	        $categoryId = 2;
 	        $pack = 1;
 	        $packSize = 5;
 	        $order = Dupa_Article_Api::SORT_ORDER_DESC;
