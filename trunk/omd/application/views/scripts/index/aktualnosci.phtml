@@ -1,17 +1,19 @@
-<div class="aktualnosci">
+<div id="news">
 	<h1 class="borderBottom">Aktualności</h1>
 	
-	<?php if( $this->mainNews ) : ?>
-    	<ul class="news">
+	<?php if ( $this->mainNews ): ?>
+    	<ul>
     	<?php for( $i = 0, $cnt = $this->mainNews->length(); $i < $cnt; $i++ ) :?>
-    	<li>
+    	<li class="singleUnderline">
         	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
-        		<span class="h3"><?php echo $this->mainNews[$i]->getTitle() ?></span>
+        		<span class="title"><?php echo $this->mainNews[$i]->getTitle() ?></span></a>
         		<span class="date"><?php echo $this->mainNews[$i]->getAddDate() ?></span>
         		<?php if( $i < 3 ) : ?>
-        			<span class="p"><?php echo $this->mainNews[$i]->getLead() ?></span>
+        			<span class="p"><?php echo $this->mainNews[$i]->getLead(); ?> </span>
+							<a class="more" href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
+		        		czytaj dalej ></a>
         		<?php endif; ?>
-        	</a>
+        	
 		</li>
     	<?php endfor; ?>
     	</ul>
