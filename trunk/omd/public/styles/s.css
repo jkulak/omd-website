@@ -315,6 +315,7 @@ p.back a:hover { text-decoration:underline }
 .lead {
 	border-bottom: 2px solid #41525C;
 	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 /* INDEX */
