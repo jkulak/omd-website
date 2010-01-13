@@ -332,6 +332,24 @@ p.back a:hover { text-decoration:underline }
 	padding-left: 20px;
 }
 
+/* ARTICLE */
+.article ul {
+	list-style-type: disc;
+	padding: 0 30px;
+}
+
+.article ul li {
+	padding-left: 10px;
+}
+
+.article p {
+	margin-bottom: 10px;
+}
+
+.article h1 {
+	margin-bottom: 2px;
+}
+
 /* NEWS */
 #publications .title {
 	display: block;

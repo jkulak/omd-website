@@ -1,6 +1,5 @@
 <div class="article">
 	<h1><?php echo $this->article->getTitle() ?></h1>
-	<p class="date"><?php echo $this->article->getAddDate() ?></p>
-	<p class="lead"><?php echo $this->article->getLead() ?></p>
+	<p class="date lead"><?php echo date("Y-m-d", strtotime($this->article->getEnableDate())) ?></p>
 	<p><?php echo $this->article->getContent() ?></p>
 </div>
