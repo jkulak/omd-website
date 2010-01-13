@@ -35,13 +35,13 @@ class IndexController extends Zend_Controller_Action
 	    
 	    try
 	    {
-	        $categoryId = 2;
+	        $categoryId = 2; //aktualnosci
 	        $pack = 1;
 	        $packSize = 1;
 	        $sort = Dupa_Article_Api::SORT_ORDER_DESC;
 	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $sort );
 
-	        $ArticlesApi->getArticlesList( null, null, null, null, '2009', '11' );
+	        //$ArticlesApi->getArticlesList( null, null, null, null, '2009', '11' );
 	    }
 	    catch( Exception $e )
 	    {
@@ -103,6 +103,16 @@ class IndexController extends Zend_Controller_Action
     }
     
     function onasAction() {
+			$ArticlesApi = Dupa_Article_Api::getInstance();
+	    try
+	    {
+            $article = $ArticlesApi->getArticle( 9 );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
+	    $this->view->article = $article;
     }
 
 	function aktualnosciAction()
@@ -146,7 +156,16 @@ class IndexController extends Zend_Controller_Action
 	}
 	
 	function siecomdAction() {
-		
+			$ArticlesApi = Dupa_Article_Api::getInstance();
+	    try
+	    {
+            $article = $ArticlesApi->getArticle( 10 );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
+	    $this->view->article = $article;
 	}
 	
 	function artykulAction()
