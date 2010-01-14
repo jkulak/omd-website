@@ -382,10 +382,11 @@ p.back a:hover { text-decoration:underline }
 }
 
 .tool {
-	margin-bottom: 45px;
+	margin-bottom: 15px;
 	float: left;
 	width: 100%;
 	position: relative;
+	height: 80px;
 }
 
 .tool img {
