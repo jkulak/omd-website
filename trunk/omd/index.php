@@ -11,7 +11,10 @@ defined('ROOT_PATH')
 
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath( ROOT_PATH . '/application') ) ;
-
+    
+defined('GLOBAL_LIB_PATH')
+    || define('GLOBAL_LIB_PATH', 'c:/PHP Libs' ) ;
+    
 error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set('Europe/London');
 
@@ -21,8 +24,8 @@ set_include_path(
 	. PATH_SEPARATOR . realpath( APPLICATION_PATH )
 	. PATH_SEPARATOR . realpath( APPLICATION_PATH . '/models' )
 	. PATH_SEPARATOR . get_include_path()
-	. PATH_SEPARATOR . '/home/hhbd/lib/external/'
-	. PATH_SEPARATOR . '/home/hhbd/lib/internal/');
+	. PATH_SEPARATOR . GLOBAL_LIB_PATH
+	. PATH_SEPARATOR . '/home/hhbd/lib/external/');
 	
 include "Zend/Loader.php";
 
