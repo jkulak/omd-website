@@ -5,7 +5,7 @@
 	
 	<?php if( $this->archive && $this->archive->cntItems ) : ?>
     	<ul class="news">
-    	<?php for( $i = 0, $cnt = $this->archive->length(); $i < $cnt; $i++ ) : ?>
+    	<?php for( $i = 0, $cnt = count( $this->archive ); $i < $cnt; $i++ ) : ?>
     	<li>
         	<a href="/artykul.html?id=<?php echo $this->archive[$i]->getId(); ?>">
         		<span class="h3"><?php echo $this->archive[$i]->getTitle() ?></span>

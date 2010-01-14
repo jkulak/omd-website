@@ -441,3 +441,10 @@ p.back a:hover { text-decoration:underline }
 	margin:5px 0 0;
 	padding:2px;
 }
+
+/* paczkowanie */
+.navigation { text-align:center }
+.navigation ul { margin:0 auto }
+.navigation li { display:inline; margin:0 20px }
+.navigation li a { text-decoration:none }
+.navigation li a:hover { text-decoration:underline }  

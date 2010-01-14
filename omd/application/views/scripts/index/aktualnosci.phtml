@@ -1,9 +1,9 @@
 <div id="news">
 	<h1 class="borderBottom">Aktualności</h1>
 	
-	<?php if ( $this->mainNews ): ?>
+	<?php if( isset( $this->mainNews[0] ) ): ?>
     	<ul>
-    	<?php for( $i = 0, $cnt = $this->mainNews->length(); $i < $cnt; $i++ ) :?>
+    	<?php for( $i = 0, $cnt = count( $this->mainNews ); $i < $cnt; $i++ ) :?>
     	<li class="singleUnderline">
         	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
         		<span class="title"><?php echo $this->mainNews[$i]->getTitle() ?></span></a>
@@ -18,4 +18,10 @@
     	<?php endfor; ?>
     	</ul>
 	<?php endif; ?>		
+</div>
+<div class="navigation">
+	<ul>
+		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
+	</ul>
 </div>
