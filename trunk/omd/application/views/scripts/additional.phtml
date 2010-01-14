@@ -7,9 +7,11 @@
 		</p>
 	</div>
 	<div class="something">
-		<p>
-			<?= $this->tweet; ?>
-		</p>
+			<?php if( sizeof($this->tweets )) : ?>
+				<?php for( $i = 0, $cnt = sizeof($this->tweets); $i < $cnt; $i++ ) :?>
+					<p id="tweet<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->tweets[$i] ?></p>
+				<?php endfor ?>
+			<?php endif; ?>
 	</div>
 </div>
 
@@ -17,7 +19,7 @@
 <div class="news">
 	<h3>Aktualności</h3>
 	<?php for( $i = 0, $cnt = count( $this->addNews ); $i < $cnt; $i++ ) :?>
-		<p><?php echo $this->addNews[$i]->getLead() ?></p>
+		<p id="short<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->addNews[$i]->getLead() ?></p>
 	<?php endfor ?>
 </div>
 <?php endif; ?>

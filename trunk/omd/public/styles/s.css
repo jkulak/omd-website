@@ -436,6 +436,11 @@ p.back a:hover { text-decoration:underline }
 }
 
 /* CONTACT */
+
+#contact p {
+	margin-bottom: 12px;
+}
+
 .text {
 	width:100%;
 	margin:5px 0 0;
