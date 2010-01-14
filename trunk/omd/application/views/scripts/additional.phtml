@@ -16,7 +16,7 @@
 <?php if( $this->addNews->cntItems ) : ?>
 <div class="news">
 	<h3>Aktualności</h3>
-	<?php for( $i = 0, $cnt = $this->addNews->length(); $i < $cnt; $i++ ) :?>
+	<?php for( $i = 0, $cnt = count( $this->addNews ); $i < $cnt; $i++ ) :?>
 		<p><?php echo $this->addNews[$i]->getLead() ?></p>
 	<?php endfor ?>
 </div>

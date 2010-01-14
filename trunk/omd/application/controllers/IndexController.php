@@ -121,8 +121,10 @@ class IndexController extends Zend_Controller_Action
 	    
 	    try
 	    {
+	        $pack = intval( $this->getRequest()->getQuery( 'p' ) );
+	        $pack = $pack ? $pack : 1;
+	        
 	        $categoryId = 2;
-	        $pack = 1;
 	        $packSize = 5;
 	        $order = Dupa_Article_Api::SORT_ORDER_DESC;
 	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $order );
