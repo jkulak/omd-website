@@ -9,10 +9,10 @@ class IndexController extends Zend_Controller_Action
    		/**
    		 * #TODO gdzie jest config?
    		 */
-		$this->view->publicUrl = 'http://webascrazy.net/omdform/public/';
+		$this->view->publicUrl = 'http://omdform.kosiarka/public/';
 		//$this->view->publicUrl = 'http://localhost/omdweb/omdweb/omdform/public/';
 		
-		$this->view->apiUrl = 'http://webascrazy.net/omdform/';
+		$this->view->apiUrl = 'http://omdform.kosiarka/';
 		//$this->view->apiUrl = 'http://localhost/omdweb/omdweb/omdform/';
    			   	
 		$this->view->title = "Panel administracyjny OMD"; 

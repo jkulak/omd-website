@@ -1,8 +1,5 @@
 <?php
 
-ini_set("magic_quotes_gpc", "0");
-set_magic_quotes_runtime(1);
-
 try{
 ini_set('display_errors', 1);
 error_reporting(E_ALL|E_STRICT);
@@ -12,7 +9,9 @@ set_include_path('.' . PATH_SEPARATOR . './library'
    . PATH_SEPARATOR . './application/models/'
    . PATH_SEPARATOR . get_include_path()
 		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/external/' //Zend
-		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'); //Hajek to dupa
+		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'
+			. PATH_SEPARATOR . '/home/hhbd/lib/external/'
+			. PATH_SEPARATOR . '/home/hhbd/lib/internal/'); //Hajek to dupa
 
 include "Zend/Loader.php";
 Zend_Loader::loadClass('Zend_Controller_Front');
