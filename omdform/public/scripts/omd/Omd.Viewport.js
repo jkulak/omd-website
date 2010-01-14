@@ -76,7 +76,8 @@
                             template_replace_values : {
                                 username : "Some User",
                                 staffid : "991234"
-                            }
+                            },
+														file_browser_callback : "tinyBrowser"
                         });
                         //tinyMCE.get('contentTextarea').getContent()
                     }
