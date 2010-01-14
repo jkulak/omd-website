@@ -1,71 +1,48 @@
 <div id="publications">
-    <h1 class="borderBottom">Analizy i publikacje 2009</h1>
-			    	<ul>
-		    	    	<li class="singleUnderline">
-
-		        	<a href="/artykul.html?id=8">
-		        		<span class="title">Optimum Media OMD pierwszy na Twitterze!</span></a>
-		        		<span class="date">2009-12-24 01:27:00</span>
-		        		        			<span class="p">Optimum Media OMD, pierwszy dom mediowy w Polsce, który zdobył Złotego Lwa w Cannes, jeden z pierwszych domów mediowych na polskim rynku reklamowym – teraz jako pierwszy polski dom mediowy jest obecny na www.twitter.com. </span>
-									<a class="more" href="/artykul.html?id=8">
-				        		czytaj dalej ></a>
-
-				</li>
-
-		    	    	<li class="singleUnderline">
-		        	<a href="/artykul.html?id=7">
-		        		<span class="title">OMG Metrics wprowadza unikalne narzędzie ekonometryczne AdEffect, wspierające planowanie kampanii te</span></a>
-		        		<span class="date">2009-12-24 00:44:20</span>
-		        		        			<span class="p">Dział Badań Omnicom Media Group, zakończył realizację dużego projektu ekonometrycznego, którego celem było ustalenie uniwersalnych determinant –czynników decydujących o skuteczności kampanii reklamowej. </span>
-									<a class="more" href="/artykul.html?id=7">
-				        		czytaj dalej ></a>
-
-
-				</li>
-		    	    	<li class="singleUnderline">
-		        	<a href="/artykul.html?id=6">
-		        		<span class="title">Materialistyczne podejście</span></a>
-		        		<span class="date">2009-12-24 00:37:31</span>
-		        		        			<span class="p">Nigdy nie było doceniane </span>
-									<a class="more" href="/artykul.html?id=6">
-
-				        		czytaj dalej ></a>
-
-				</li>
-		    	    	<li class="singleUnderline">
-		        	<a href="/artykul.html?id=4">
-		        		<span class="title">Czwarty zadje się</span></a>
-		        		<span class="date"></span>
-
-				</li>
-		    	    	<li class="singleUnderline">
-
-		        	<a href="/artykul.html?id=3">
-		        		<span class="title">Oczywiście tak powinno być</span></a>
-		        		<span class="date"></span>
-
-				</li>
-		    	    	</ul>
-
+	<h1 class="borderBottom">Analizy i publikacje</h1>
+	
+	<?php if( isset( $this->mainNews[0] ) ): ?>
+    	<ul>
+    	<?php for( $i = 0, $cnt = count( $this->mainNews ); $i < $cnt; $i++ ) :?>
+    	<li class="singleUnderline">
+        	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
+        		<span class="title"><?php echo $this->mainNews[$i]->getTitle() ?></span></a>
+        		<span class="date"><?php echo date("Y-m-d", strtotime($this->mainNews[$i]->getEnableDate())) ?></span>
+        		<?php if( $i < 3 ) : ?>
+        			<span class="p"><?php echo $this->mainNews[$i]->getLead(); ?> </span>
+							<a class="more" href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
+		        		zobacz publikację »</a>
+        		<?php endif; ?>
+        	
+		</li>
+    	<?php endfor; ?>
+    	</ul>
+	<?php endif; ?>		
+</div>
+<div class="navigation">
+	<ul>
+		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
+	</ul>
 </div>
 
-<!-- 
+<!--
+<div id="publications">
+    <h1 class="borderBottom">Analizy i publikacje 2009</h1>
 
-
-<ul class="dotted">
-	<li><a href="/publikace-styczen-2009.html">Grudzień</a></li>
-	<li><a href="/publikace-styczen-2009.html">Listopad</a></li>
-	<li><a href="/publikace-styczen-2009.html">Październik</a></li>
-	<li><a href="/publikace-styczen-2009.html">Wrzesień</a></li>
-	<li><a href="/publikace-styczen-2009.html">Sierpień</a></li>
-	<li><a href="/publikace-styczen-2009.html">Lipiec</a></li>
-	<li><a href="/publikace-styczen-2009.html">Czerwiec</a></li>
-	<li><a href="/publikace-styczen-2009.html">Maj</a></li>
-	<li><a href="/publikace-styczen-2009.html">Kwiecień</a></li>
-	<li><a href="/publikace-styczen-2009.html">Marzec</a></li>
-	<li><a href="/publikace-styczen-2009.html">Luty</a></li>
-	<li><a href="/publikace-styczen-2009.html">Styczeń</a></li>
-</ul>
-
-
+		<ul class="dotted">
+			<li><a href="/publikace-styczen-2009.html">Grudzień</a></li>
+			<li><a href="/publikace-styczen-2009.html">Listopad</a></li>
+			<li><a href="/publikace-styczen-2009.html">Październik</a></li>
+			<li><a href="/publikace-styczen-2009.html">Wrzesień</a></li>
+			<li><a href="/publikace-styczen-2009.html">Sierpień</a></li>
+			<li><a href="/publikace-styczen-2009.html">Lipiec</a></li>
+			<li><a href="/publikace-styczen-2009.html">Czerwiec</a></li>
+			<li><a href="/publikace-styczen-2009.html">Maj</a></li>
+			<li><a href="/publikace-styczen-2009.html">Kwiecień</a></li>
+			<li><a href="/publikace-styczen-2009.html">Marzec</a></li>
+			<li><a href="/publikace-styczen-2009.html">Luty</a></li>
+			<li><a href="/publikace-styczen-2009.html">Styczeń</a></li>
+		</ul>
+</div>
 -->

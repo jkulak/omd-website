@@ -333,22 +333,30 @@ p.back a:hover { text-decoration:underline }
 }
 
 /* ARTICLE */
-.article ul {
+#article ul {
 	list-style-type: disc;
 	padding: 0 30px;
 }
 
-.article ul li {
+#article ul li {
 	padding-left: 10px;
 }
 
-.article p {
+#article p {
 	margin-bottom: 10px;
 }
 
-.article h1 {
+#article h1 {
 	margin-bottom: 2px;
 }
+
+#article span a {
+	text-decoration: none;
+}
+
+#article span a:hover {
+	text-decoration:underline
+	}
 
 /* NEWS */
 #publications .title {
