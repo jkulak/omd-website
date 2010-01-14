@@ -37,7 +37,7 @@ class IndexController extends Zend_Controller_Action
 	    {
 	        $categoryId = 2; //aktualnosci
 	        $pack = 1;
-	        $packSize = 1;
+	        $packSize = 3;
 	        $sort = Dupa_Article_Api::SORT_ORDER_DESC;
 	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $sort );
 
@@ -57,8 +57,11 @@ class IndexController extends Zend_Controller_Action
 			'count' => 3
 			);
 		$response = $twitterApi->statusUserTimeline($params);
-		$tweet = $response->status[rand(0, 2)]->text;
-		$this->view->tweet = $tweet;
+		//$tweet = $response->status[rand(0, 2)]->text;
+		$this->view->tweets = array();
+		for ($i=0; $i < 3; $i++) { 
+			$this->view->tweets[] = $response->status[$i]->text;
+		}
 	} 
    
 	function indexAction()
