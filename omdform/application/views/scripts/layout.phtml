@@ -2,17 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
    <head>
-   	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <title><?php echo $this->escape($this->title); ?></title>
-      <link rel="stylesheet" type="text/css" href="http://webascrazy.net/js/ext/resources/css/ext-all.css" />
-      <script type="text/javascript" src="http://webascrazy.net/js/ext/adapter/ext/ext-base-debug.js"></script>
-   	  <script type="text/javascript" src="http://webascrazy.net/js/ext/ext-all-debug.js"></script>
+      <link rel="stylesheet" type="text/css" href="<?php echo $this->publicUrl; ?>scripts/ext/resources/css/ext-all.css" />
+      <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/ext/adapter/ext/ext-base-debug.js"></script>
+   	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/ext/ext-all-debug.js"></script>
    	  <script type="text/javascript"> 
    	  	  Ext.namespace( 'Omd' );
    	  	  Omd.publicUrl = '<?php echo $this->publicUrl; ?>';
    	  	  Omd.apiUrl = '<?php echo $this->apiUrl; ?>';
    	  </script>
-   	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/tinymce/tiny_mce.js"></script>
+			<script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/tiny_mce/plugins/tinybrowser/tb_tinymce.js.php"></script>
+   	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/tiny_mce/tiny_mce.js"></script>
    	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/omd/Omd.Langpl.js?v=91004"></script>
    	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/omd/Omd.Api.js?v=91004"></script>
    	  <script type="text/javascript" src="<?php echo $this->publicUrl; ?>scripts/omd/Omd.Viewport.js?v=91004"></script>

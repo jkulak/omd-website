@@ -139,7 +139,7 @@ class Dupa_Article_Api
 		                'title'	    => $article->getTitle(),
 		                'lead'	    => $article->getLead(),
 		                'content'	=> $article->getContent(),
-		                'updated'	=> date( 'Y-m-d H:i:s' ),
+		                'added'	=> date( 'Y-m-d H:i:s' ),
 		                'addedby'	=> $article->getAddBy(),
 		                'updated'	=> date( 'Y-m-d H:i:s' ),
 		                'updatedby' => $article->getUpdateBy(),
