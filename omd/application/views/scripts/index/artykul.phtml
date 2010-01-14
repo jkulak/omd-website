@@ -1,7 +1,9 @@
+<div id="article">
 <?php if( $this->article ) : ?>
-<div class="article">
 	<h1><?php echo $this->article->getTitle() ?></h1>
 	<p class="date lead"><?php echo date("Y-m-d", strtotime($this->article->getEnableDate())) ?></p>
 	<p><?php echo $this->article->getContent() ?></p>
-</div>
 <?php endif; ?>
+
+<span>« <a href="<?= $this->baseUrl; ?>/aktualnosci.html">wróć do listy</a></span>
+</div>

@@ -59,7 +59,7 @@ class IndexController extends Zend_Controller_Action
 			'count' => 3
 			);
 		$response = $twitterApi->statusUserTimeline($params);
-		//$tweet = $response->status[rand(0, 2)]->text;
+		
 		$this->view->tweets = array();
 		for ($i=0; $i < 3; $i++) { 
 			$this->view->tweets[] = $response->status[$i]->text;
@@ -155,7 +155,24 @@ class IndexController extends Zend_Controller_Action
 	}
 	
 	function analizyipublikacjeAction() {
-		
+		 $ArticlesApi = Dupa_Article_Api::getInstance();
+	    
+	    try
+	    {
+	        $pack = intval( $this->getRequest()->getQuery( 'p' ) );
+	        $pack = $pack ? $pack : 1;
+	        
+	        $categoryId = 3;
+	        $packSize = 5;
+	        $order = Dupa_Article_Api::SORT_ORDER_DESC;
+	        $articles = $ArticlesApi->getArticlesList( $categoryId, $pack, $packSize, $order );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
+
+	    $this->view->mainNews = $articles;
 	}
 	
 	function omdschoolAction() {
