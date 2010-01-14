@@ -47,8 +47,10 @@ class IndexController extends Zend_Controller_Action
 	    {
 	        echo $e->getMessage();
 	    }
-	    
-	    $this->view->addNews = $articles;
+	    $this->view->addNews = array();
+			for ($i=0; $i < 3; $i++) { 
+				$this->view->addNews[] = $articles[$i]->getLead();
+			}
 	
 		// pobranie wpisu z tweetera
 		$twitterApi = new Phly_Twitter('', '');

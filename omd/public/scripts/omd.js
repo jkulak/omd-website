@@ -14,5 +14,5 @@ function scrollIt(id, max, elem) {
 	if (nextId>=max) nextId = 0;	
 	$(elem+(id)).style.display="block";
 	$(elem+(prevId)).style.display="none";
-	var t=setTimeout("scrollIt("+nextId+","+max+",\""+elem+"\");",3000)
+	var t=setTimeout("scrollIt("+nextId+","+max+",\""+elem+"\");",6000)
 }

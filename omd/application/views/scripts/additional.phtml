@@ -15,11 +15,11 @@
 	</div>
 </div>
 
-<?php if( $this->addNews->cntItems ) : ?>
+<?php if( count($this->addNews) ) : ?>
 <div class="news">
 	<h3>Aktualności</h3>
 	<?php for( $i = 0, $cnt = count( $this->addNews ); $i < $cnt; $i++ ) :?>
-		<p id="short<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->addNews[$i]->getLead() ?></p>
+		<p id="short<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->addNews[$i] ?></p>
 	<?php endfor ?>
 </div>
 <?php endif; ?>
