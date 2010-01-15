@@ -8,11 +8,11 @@
         	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
         		<span class="title"><?php echo $this->mainNews[$i]->getTitle() ?></span></a>
         		<span class="date"><?php echo date("Y-m-d", strtotime($this->mainNews[$i]->getEnableDate())) ?></span>
-        		<?php if( $i < 3 ) : ?>
+        		<?php // if( $i < 3 ) : ?>
         			<span class="p"><?php echo $this->mainNews[$i]->getLead(); ?> </span>
 							<a class="more" href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
 		        		zobacz publikację »</a>
-        		<?php endif; ?>
+        		<?php // endif; ?>
         	
 		</li>
     	<?php endfor; ?>
@@ -21,8 +21,8 @@
 </div>
 <div class="navigation">
 	<ul>
-		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
-		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
 	</ul>
 </div>
 

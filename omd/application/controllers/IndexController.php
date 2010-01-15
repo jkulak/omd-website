@@ -7,11 +7,11 @@ require_once 'Dupa/Service/Api/Twitter.php';
 
 class IndexController extends Zend_Controller_Action
 {
-    const MAIL_SEND_FROM_HOST  = ''; // przyklad: 'poczta.interia.pl'
+    const MAIL_SEND_FROM_HOST  = '213.17.164.67'; // przyklad: 'poczta.interia.pl'
     const MAIL_SEND_FROM_USER  = ''; // przyklad: 'kotletschabowy'
     const MAIL_SEND_FROM_PASS  = ''; // przyklad: 'haslo123'
-    const MAIL_SEND_FROM_EMAIL = ''; // przyklad: 'kotletschabowy@interia.pl'
-    const MAIL_SEND_TO_EMAIL   = ''; // przyklad: 'biuro@omd.com'
+    const MAIL_SEND_FROM_EMAIL = 'info@optimum-media.pl'; // przyklad: 'kotletschabowy@interia.pl'
+    const MAIL_SEND_TO_EMAIL   = 'jakub.kulak@gmail.com'; // przyklad: 'biuro@omd.com'
     
     private $_months = array( '01' => 'Styczen',
                               '02' => 'Luty',
