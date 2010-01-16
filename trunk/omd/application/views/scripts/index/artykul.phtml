@@ -1,7 +1,7 @@
 <div id="article">
 <?php if( $this->article ) : ?>
 	<h1><?php echo $this->article->getTitle() ?></h1>
-	<p class="date lead"><?php echo date("Y-m-d", strtotime($this->article->getEnableDate())) ?></p>
+	<p class="date lead"><?php echo $this->article->getEnableDate() ?></p>
 	<p><?php echo $this->article->getContent() ?></p>
 <?php endif; ?>
 

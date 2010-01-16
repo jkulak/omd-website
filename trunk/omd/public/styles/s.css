@@ -16,6 +16,7 @@ body {
 
 input, textarea { 
 	font-size: 12px;
+	font-family:Arial,Helvetica,sans-serif;
 }
 
 a {
@@ -450,7 +451,7 @@ p.back a:hover { text-decoration:underline }
 }
 
 .text {
-	width:100%;
+	width:95%;
 	margin:5px 0 0;
 	padding:2px;
 }

@@ -3,15 +3,18 @@
 require_once 'Dupa/Article/Api.php';
 require_once 'Zend/Mail.php';    
 require_once 'Zend/Mail/Transport/Smtp.php';
+require_once 'Zend/Validate/EmailAddress.php';
 require_once 'Dupa/Service/Api/Twitter.php';
 
 class IndexController extends Zend_Controller_Action
 {
-    const MAIL_SEND_FROM_HOST  = '213.17.164.67'; // przyklad: 'poczta.interia.pl'
-    const MAIL_SEND_FROM_USER  = ''; // przyklad: 'kotletschabowy'
-    const MAIL_SEND_FROM_PASS  = ''; // przyklad: 'haslo123'
-    const MAIL_SEND_FROM_EMAIL = 'info@optimum-media.pl'; // przyklad: 'kotletschabowy@interia.pl'
-    const MAIL_SEND_TO_EMAIL   = 'jakub.kulak@gmail.com'; // przyklad: 'biuro@omd.com'
+    const MAIL_SEND_FROM_HOST  = 'poczta.interia.pl'; // przyklad: 'poczta.interia.pl'
+    //const MAIL_SEND_FROM_HOST  = '213.17.164.67'; // przyklad: 'poczta.interia.pl'    
+    const MAIL_SEND_FROM_USER  = 'kotletschabowy'; // przyklad: 'kotletschabowy'
+    const MAIL_SEND_FROM_PASS  = 'haslo123'; // przyklad: 'haslo123'
+    //const MAIL_SEND_FROM_EMAIL = 'info@optimum-media.pl'; // przyklad: 'kotletschabowy@interia.pl'
+    const MAIL_SEND_FROM_EMAIL = 'kotletschabowy@interia.pl'; // przyklad: 'kotletschabowy@interia.pl'
+    const MAIL_SEND_TO_EMAIL   = 'pawel.hajek@gmail.com'; // przyklad: 'biuro@omd.com'
     
     private $_months = array( '01' => 'Styczen',
                               '02' => 'Luty',
@@ -48,7 +51,7 @@ class IndexController extends Zend_Controller_Action
 	        echo $e->getMessage();
 	    }
 	    $this->view->addNews = array();
-			for ($i=0; $i < 3; $i++) { 
+			for ($i=0; $i < 3 && $i < count( $articles ); $i++) { 
 				$this->view->addNews[] = $articles[$i]->getLead();
 			}
 	
@@ -75,17 +78,19 @@ class IndexController extends Zend_Controller_Action
         if( $this->getRequest()->isPost() )
         {
             $post = $this->getRequest()->getPost();
-            
+
             $config = array( 'auth' => 'login',
                              'username' => self::MAIL_SEND_FROM_USER,
                              'password' => self::MAIL_SEND_FROM_PASS );
-            
+
             $transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST, $config );
+            //$transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST );
 
             $mail = new Zend_Mail( 'UTF-8' );
             
             $body = "Instytucja:\n" . $post['institution'];
             $body .= "\n\nImię i nazwisko:\n" . $post['name'];
+            $body .= "\n\nStanowisko:\n" . $post['position'];
             $body .= "\n\nE-mail:\n" . $post['email'];
             $body .= "\n\nTelefon:\n" . $post['telephone'];
             $body .= "\n\nWiadomość:\n" . $post['message'];            
@@ -93,14 +98,26 @@ class IndexController extends Zend_Controller_Action
             $mail->setBodyText( $body );
             $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'OMD' );
             $mail->addTo( self::MAIL_SEND_TO_EMAIL, 'OMD' );
+            if( isset( $post['copy'] ) && $post['copy'] == 'on' )
+            {
+                $validator = new Zend_Validate_EmailAddress();
+                if( $validator->isValid( $post['email'] ) )
+                {
+                    $mail->addTo( $post['email'], $post['name'] );
+                }
+            }
+                
             $mail->setSubject( 'Nowa wiadomość' );
+            
             try
             {
                 $mail->send( $transport );
+
                 $message = 'Wiadomość została wysłana.';                
             }
             catch( Zend_Mail_Protocol_Exception $e )
             {
+pr( $e );
                 $message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
             }
             $this->view->message = $message;
