@@ -31,9 +31,10 @@
 	
 	_self.getStatus = new Ext.data.Store({
 		data : { 'status' : [
-      			{ name : ['enabled'], id : 'enabled' },
-      			{ name : ['disabled'], id : 'disabled' },
-      			{ name : ['test'], id : 'test' }
+      			{ name : ['Wlaczony'], id : 'enabled' },
+      			{ name : ['Wylaczony'], id : 'disabled' },
+      			{ name : ['Skasowany'], id : 'deleted' },
+      			{ name : ['Dev'], id : 'dev' }
       		]
       	},
       	reader: new Ext.data.JsonReader({
