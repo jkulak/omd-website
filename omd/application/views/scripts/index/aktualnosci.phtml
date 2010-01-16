@@ -7,7 +7,7 @@
     	<li class="singleUnderline">
         	<a href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">
         		<span class="title"><?php echo $this->mainNews[$i]->getTitle() ?></span></a>
-        		<span class="date"><?php echo date("Y-m-d", strtotime($this->mainNews[$i]->getEnableDate())) ?></span>
+        		<span class="date"><?php echo $this->mainNews[$i]->getEnableDate() ?></span>
         		<?php // if( $i < 3 ) : ?>
         			<span class="p"><?php echo $this->mainNews[$i]->getLead(); ?> </span>
 							<a class="more" href="<?= $this->baseUrl; ?>/artykul.html?id=<?php echo $this->mainNews[$i]->getId(); ?>">

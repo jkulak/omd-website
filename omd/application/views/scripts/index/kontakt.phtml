@@ -1,5 +1,25 @@
 <div id="contact">
-	<div class="half right">
+
+	<div class="half left">
+    	<h1 class="borderBottom">Kontakt</h1>
+    	
+    	<p><strong>OMD Sp. z o.o.<br />oddział Optimum Media OMD</strong></p>
+    	<p>ul. Ibisa 14<br />02-812 Warszawa</p>
+    	<p>		
+    		<strong>tel. (+4822) 32 01 200</strong><br />
+    		fax: (+4822) 32 01 201<br />
+    		mail: <a href="mailto:info@optimum-media.pl">info@optimum-media.pl</a>
+    	</p>
+    	<p>
+    		NIP: 951 220 49 28<br />	
+    		KRS: 000 027 24 33<br />
+    		Sąd Rejonowy dla m. st. Warszawy<br />
+    		XIII Wydział Gospodarczy KRS<br />
+    		Kapitał: 26 235 500,00 zł
+    	</p>
+	</div>
+	
+	<div class="half left">
 		<?php if( !$this->message ) :?>
 		<form action="" method="post">
     		<h1 class="borderBottom">Formularz kontaktowy</h1>
@@ -29,10 +49,10 @@
     			<label for="message">Wiadomość</label><br/>
     			<textarea class="text" name="message" id="message" rows="5"></textarea>		
     		</p>
-<p>
-	<input type="checkbox" name="copy" value="" id="copy">
-	<label for="copy">Prześlij kopię tej wiadomości na swój e-mail</label>
-</p>
+            <p>
+            	<input type="checkbox" name="copy" id="copy">
+            	<label for="copy">Prześlij kopię tej wiadomości na swój e-mail</label>
+            </p>
     		<p><input class="right" type="submit" value="Wyślij" /></p>
 		</form>
 		<?php else :?>
@@ -40,25 +60,6 @@
 		<?php endif; ?>
 	</div>
 
-	<div class="half">
-    	<h1 class="borderBottom">Kontakt</h1>
-    	
-    	<p><strong>OMD Sp. z o.o.<br />oddział Optimum Media OMD</strong></p>
-    	<p>ul. Ibisa 14<br />02-812 Warszawa</p>
-    	<p>		
-    		<strong>tel. (+4822) 32 01 200</strong><br />
-    		fax: (+4822) 32 01 201<br />
-    		mail: <a href="mailto:info@optimum-media.pl">info@optimum-media.pl</a>
-    	</p>
-    	<p>
-    		NIP: 951 220 49 28<br />	
-    		KRS: 000 027 24 33<br />
-    		Sąd Rejonowy dla m. st. Warszawy<br />
-    		XIII Wydział Gospodarczy KRS<br />
-    		Kapitał: 26 235 500,00 zł
-    	</p>
-	</div>
-	
 	<div class="left full">
 		<br/>
 		<h2>Lokalizacja naszej siedziby</h2>
