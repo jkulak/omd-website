@@ -117,7 +117,6 @@ class IndexController extends Zend_Controller_Action
             }
             catch( Zend_Mail_Protocol_Exception $e )
             {
-pr( $e );
                 $message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
             }
             $this->view->message = $message;
