@@ -4,14 +4,18 @@ try{
 ini_set('display_errors', 1);
 error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set('Europe/London');
-
+    
+defined('GLOBAL_LIB_PATH')
+    || define('GLOBAL_LIB_PATH', 'c:/PHP Libs' ) ;
+    
 set_include_path('.' . PATH_SEPARATOR . './library'
-   . PATH_SEPARATOR . './application/models/'
-   . PATH_SEPARATOR . get_include_path()
-		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/external/' //Zend
-		. PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'
-			. PATH_SEPARATOR . '/home/hhbd/lib/external/'
-			. PATH_SEPARATOR . '/home/hhbd/lib/internal/'); //Hajek to dupa
+    . PATH_SEPARATOR . './application/models/'
+    . PATH_SEPARATOR . get_include_path()
+	. PATH_SEPARATOR . GLOBAL_LIB_PATH
+    . PATH_SEPARATOR . '/opt/lampp/htdocs/lib/external/' //Zend
+    . PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'
+    . PATH_SEPARATOR . '/home/hhbd/lib/external/'
+    . PATH_SEPARATOR . '/home/hhbd/lib/internal/');
 
 include "Zend/Loader.php";
 Zend_Loader::loadClass('Zend_Controller_Front');

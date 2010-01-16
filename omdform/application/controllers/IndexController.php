@@ -6,13 +6,14 @@ class IndexController extends Zend_Controller_Action
 	private $_apiCategories;
 	
 	public function init() {
+
    		/**
    		 * #TODO gdzie jest config?
    		 */
-		$this->view->publicUrl = 'http://omdform.kosiarka/public/';
+		$this->view->publicUrl = '/public/';
 		//$this->view->publicUrl = 'http://localhost/omdweb/omdweb/omdform/public/';
 		
-		$this->view->apiUrl = 'http://omdform.kosiarka/';
+		$this->view->apiUrl = '/';
 		//$this->view->apiUrl = 'http://localhost/omdweb/omdweb/omdform/';
    			   	
 		$this->view->title = "Panel administracyjny OMD"; 
@@ -36,11 +37,9 @@ class IndexController extends Zend_Controller_Action
 	}
 
 	public function indexAction() {
-   		//$article = new Dupa_Article();
    		/**
    		 * #TODO gdzie jest config?
    		 */
-
 	}
 	
 	public function setarticleAction() {
@@ -62,14 +61,20 @@ class IndexController extends Zend_Controller_Action
     	    $article->setDisableDate( $this->_request->getPost( 'deactivate', null ) );
     	    $article->setStatus( $this->_request->getPost( 'statusid2', null ) );
     	    
-    	    $categoryId = $this->_request->getPost( 'categoryid', null );
+    	    if( $categoryId = $this->_request->getPost( 'categoryid', null ) )
+    	    {
+    	        $category = new Dupa_Category_Container();
+    	        $category->setId( $categoryId );
+    	        $article->setCategory( $category );
+    	    }
     	    
-    	    try{
+    	    try
+    	    {
     	    	$ret = false;
 	    	    if( $articleId ) {
-	    	    	$ret = $this->_api->setArticle( $article, $categoryId );
+	    	    	$ret = $this->_api->setArticle( $article );
 	    	    } else {
-	    	    	$ret = $this->_api->addArticle( $article, $categoryId );
+	    	    	$ret = $this->_api->addArticle( $article );
 	    	    }
     	    	
 	    	    echo $this->_res( $ret, $ret );
@@ -116,9 +121,8 @@ class IndexController extends Zend_Controller_Action
     		    $data['activate'] = $article->getEnableDate();
     		    $data['deactivate'] = $article->getDisableDate();
     		    $data['status'] = $article->getStatus();
-    		    $data['category'] = $article->getCategory();
-				
-    	    	
+    		    $data['category'] = $article->getCategory(0) ? $article->getCategory(0)->getId() : null;
+				    	    	
 	    	    echo $this->_res( true, true, Zend_Json::encode( $data ) );
 	    	    
     	    } catch( Dupa_Exception $e ) {
@@ -137,7 +141,7 @@ class IndexController extends Zend_Controller_Action
 		$first = $this->_request->getParam( 'first', 1 );
 		$first = ( $first > 1 ) ? ( ( $first / 40 ) + 1 ) : $first;
 		
-		$cnt = $this->_api->getArticlesCnt();
+		$cnt = $this->_api->getArticlesCount();
 		
 		$items = array(
 			'result' => array(
@@ -145,18 +149,18 @@ class IndexController extends Zend_Controller_Action
 				'total' => isSet( $cnt[0]['rows'] ) ? $cnt[0]['rows'] : 0
 			)
 		);
-		$list = $this->_api->getArticlesList( $first );
-		
+		$list = $this->_api->getArticlesList( null, $first );
+
 		$i = 0;
-		if( $list ) {
-			foreach( $list as $value ) {
-				//Zend_Debug::dump( $value );
-				$items['result']['items'][$i]['id']      	  = $value->getId();
-				$items['result']['items'][$i]['title']   	  = $value->getTitle();
-				$items['result']['items'][$i]['categoryName'] = $value->getCategoryName();
-				$items['result']['items'][$i]['status']  	  = $value->getStatus();
-				
-				$i++;
+		if( $list )
+		{
+			for( $i = 0, $cnt = count( $list ); $i < $cnt; $i++ )
+			{
+			    $cats = $list[$i]->getCategories();
+				$items['result']['items'][$i]['id']      	  = $list[$i]->getId();
+				$items['result']['items'][$i]['title']   	  = $list[$i]->getTitle();
+				$items['result']['items'][$i]['categoryName'] = isset( $cats[0] ) ? $cats[0]->getName() : '';
+				$items['result']['items'][$i]['status']  	  = $list[$i]->getStatus();
 			}
 		}
 		
@@ -237,13 +241,14 @@ class IndexController extends Zend_Controller_Action
 	}
 	
 	public function getcategorylistAction() {
+
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender();
 		
 		$first = $this->_request->getParam( 'first', 1 );
 		$first = ( $first > 1 ) ? ( ( $first / 40 ) + 1 ) : $first;
 		
-		$cnt = $this->_apiCategories->getCategoriesCnt();
+		$cnt = $this->_apiCategories->getCategoriesCount();
 		
 		$items = array(
 			'result' => array(
@@ -255,14 +260,13 @@ class IndexController extends Zend_Controller_Action
 		$list = $this->_apiCategories->getCategoriesList( $first );
 		
 		$i = 0;
-		if( $list ) {
-			foreach( $list as $value ) {
-				//Zend_Debug::dump( $value );
-				$items['result']['items'][$i]['id']      = $value->getId();
-				$items['result']['items'][$i]['name']    = $value->getName();
-				$items['result']['items'][$i]['addedby'] = $value->getAddBy();
-				
-				$i++;
+		if( $list )
+		{
+			for( $i = 0, $cnt = count( $list ); $i < $cnt; $i++ )
+			{
+				$items['result']['items'][$i]['id']      = $list[$i]->getId();
+				$items['result']['items'][$i]['name']    = $list[$i]->getName();
+				$items['result']['items'][$i]['addedby'] = $list[$i]->getAddBy();
 			}
 		}
 		echo Zend_Json::encode( $items );
