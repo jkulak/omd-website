@@ -21,6 +21,11 @@ input, textarea {
 
 a {
 	color: #E51837;
+		border-color: white;
+}
+
+a:active, a:focus {
+	outline: 0;
 }
 
 h1 {
@@ -448,6 +453,10 @@ p.back a:hover { text-decoration:underline }
 
 #contact p {
 	margin-bottom: 12px;
+}
+
+#contact h2 {
+	color: #E51837;
 }
 
 .text {
