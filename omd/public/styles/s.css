@@ -103,7 +103,7 @@ img {
 
 .dotted {
 	padding:0 0 0 20px;
-	list-style-type: square;
+	list-style-type: disc;
 }
 
 .paragraph {
@@ -310,7 +310,7 @@ ul.news a:hover span.h3 { text-decoration:underline }
 ul.news p a:hover { text-decoration:underline }
 
 .naszePrace .praca { padding:10px 0 }
-.naszePrace .praca ul { padding:0 0 0 20px; list-style-type:square }
+.naszePrace .praca ul { padding:0 0 0 20px; list-style-type:disc }
 .naszePrace a { text-decoration:none }
 
 .article .date { }
