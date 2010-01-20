@@ -8,13 +8,11 @@ require_once 'Dupa/Service/Api/Twitter.php';
 
 class IndexController extends Zend_Controller_Action
 {
-    const MAIL_SEND_FROM_HOST  = '213.17.164.67'; // przyklad: 'poczta.interia.pl'
-    //const MAIL_SEND_FROM_HOST  = '213.17.164.67'; // przyklad: 'poczta.interia.pl'    
-    const MAIL_SEND_FROM_USER  = 'om584'; // przyklad: 'kotletschabowy'
-    const MAIL_SEND_FROM_PASS  = 'web467dfg'; // przyklad: 'haslo123'
-    //const MAIL_SEND_FROM_EMAIL = 'info@optimum-media.pl'; // przyklad: 'kotletschabowy@interia.pl'
-    const MAIL_SEND_FROM_EMAIL = 'optimum-media@optimum-media.pl'; // przyklad: 'kotletschabowy@interia.pl'
-    const MAIL_SEND_TO_EMAIL   = 'jakub.kulak@gmail.com'; // przyklad: 'biuro@omd.com'
+    const MAIL_SEND_FROM_HOST  = '213.17.164.67';
+    const MAIL_SEND_FROM_USER  = 'om584';
+    const MAIL_SEND_FROM_PASS  = 'web467dfg';
+    const MAIL_SEND_FROM_EMAIL = 'optimum-media@optimum-media.pl';
+    const MAIL_SEND_TO_EMAIL   = 'optimum-media@optimum-media.pl';
     
     private $_months = array( '01' => 'Styczen',
                               '02' => 'Luty',
@@ -111,10 +109,8 @@ class IndexController extends Zend_Controller_Action
             
             try
             {
-                $result = $mail->send( $transport );
-								echo 'test.jkulak';
-								print_r($result);
-					
+                $res = $mail->send( $transport );
+
                 $message = 'Wiadomość została wysłana.';                
             }
             catch( Zend_Mail_Protocol_Exception $e )
