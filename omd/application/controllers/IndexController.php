@@ -59,7 +59,7 @@ class IndexController extends Zend_Controller_Action
 			'id' => 'OptimumMediaOMD',
 			'count' => 3
 			);
-		//$response = $twitterApi->statusUserTimeline($params);
+		$response = $twitterApi->statusUserTimeline($params);
 		
 		$this->view->tweets = array();
 		for ($i=0; $i < 3; $i++) { 
