@@ -1,22 +1,8 @@
 <div id="contact">
 
 	<div class="half left">
-    	<h1 class="borderBottom">Kontakt</h1>
-    	
-    	<p><strong>OMD Sp. z o.o.<br />oddział Optimum Media OMD</strong></p>
-    	<p>ul. Ibisa 14<br />02-812 Warszawa</p>
-    	<p>		
-    		<strong>tel. (+4822) 32 01 200</strong><br />
-    		fax: (+4822) 32 01 201<br />
-    		mail: <a href="mailto:optimum-media@optimum-media.pl">optimum-media@optimum-media.pl</a>
-    	</p>
-    	<p>
-    		NIP: 951 220 49 28<br />	
-    		KRS: 000 027 24 33<br />
-    		Sąd Rejonowy dla m. st. Warszawy<br />
-    		XIII Wydział Gospodarczy KRS<br />
-    		Kapitał: 26 235 500,00 zł
-    	</p>
+    	<h1 class="borderBottom"><?php echo $this->article->getTitle() ?></h1>
+				<?php echo $this->article->getContent() ?>
 	</div>
 	
 	<div class="half left">

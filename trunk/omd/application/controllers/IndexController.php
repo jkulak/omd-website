@@ -120,6 +120,17 @@ class IndexController extends Zend_Controller_Action
 
             $this->view->message = $message;
         }
+
+				$ArticlesApi = Dupa_Article_Api::getInstance();
+		    try
+		    {
+		          $article = $ArticlesApi->getArticle( 35 );
+		    }
+		    catch( Exception $e )
+		    {
+		        echo $e->getMessage();
+		    }
+		    $this->view->article = $article;
     }
     
     function onasAction() {
