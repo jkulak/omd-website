@@ -59,7 +59,7 @@ class IndexController extends Zend_Controller_Action
 			'id' => 'OptimumMediaOMD',
 			'count' => 3
 			);
-		$response = $twitterApi->statusUserTimeline($params);
+		//$response = $twitterApi->statusUserTimeline($params);
 		
 		$this->view->tweets = array();
 		for ($i=0; $i < 3; $i++) { 
@@ -176,8 +176,21 @@ class IndexController extends Zend_Controller_Action
 		
 	}
 	
-	function narzedziaAction() {
+	function mapastronyAction() {
 		
+	}
+	
+	function narzedziaAction() {
+		$ArticlesApi = Dupa_Article_Api::getInstance();
+    try
+    {
+          $article = $ArticlesApi->getArticle( 36 );
+    }
+    catch( Exception $e )
+    {
+        echo $e->getMessage();
+    }
+    $this->view->article = $article;
 	}
 	
 	function analizyipublikacjeAction() {
