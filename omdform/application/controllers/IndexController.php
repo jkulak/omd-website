@@ -5,17 +5,18 @@ class IndexController extends Zend_Controller_Action
 	
 	private $_apiCategories;
 	
-	private $_packSize = 10;
+	private $_packSize = 50;
 	
 	public function init() {
 
    		/**
    		 * #TODO gdzie jest config?
    		 */
-		$this->view->publicUrl = '/public/';
+		$url = $_SERVER['REQUEST_URI'];
+		$this->view->publicUrl = $url . 'public/';
 		//$this->view->publicUrl = 'http://localhost/omdweb/omdweb/omdform/public/';
 		
-		$this->view->apiUrl = '/';
+		$this->view->apiUrl = $url;
 		//$this->view->apiUrl = 'http://localhost/omdweb/omdweb/omdform/';
    			   	
 		$this->view->title = "Panel administracyjny OMD"; 
@@ -53,9 +54,10 @@ class IndexController extends Zend_Controller_Action
     	    
     	    $articleId = $this->_request->getPost( 'id', null );
     	    $article->setId( $articleId );
-    	    $article->setTitle( $this->_request->getPost( 'title', null ) );
-    	    $article->setLead( $this->_request->getPost( 'lead', null ) );
-    	    $article->setContent( $this->_request->getPost( 'content2', null ) );
+					// tymczasowo stripsashes
+    	    $article->setTitle( stripslashes($this->_request->getPost( 'title', null ) ) );
+    	    $article->setLead( stripslashes($this->_request->getPost( 'lead', null ) ) );
+    	    $article->setContent( stripslashes($this->_request->getPost( 'content2', null ) ) );
     	    $article->setAddDate( $this->_request->getPost( 'added', null ) );
         	$article->setAddBy( $this->_request->getPost( 'addedby', null ) );
     	    $article->setUpdateBy( $this->_request->getPost( 'updatedby', null ) );
