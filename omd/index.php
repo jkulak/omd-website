@@ -5,7 +5,7 @@ function pr( $txt )
 	print_r( $txt );
 	echo '</pre>';
 } 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 defined('ROOT_PATH')
     || define('ROOT_PATH', realpath(dirname(__FILE__) ));
 
@@ -74,6 +74,7 @@ $router->addRoute('siecomd', new Zend_Controller_Router_Route('siec-omd.html', a
 $router->addRoute('artykul', new Zend_Controller_Router_Route('artykul.html', array('controller' => 'index', 'action' => 'artykul')));
 $router->addRoute('analiza', new Zend_Controller_Router_Route('analiza.html', array('controller' => 'index', 'action' => 'analiza')));
 $router->addRoute('archiwum', new Zend_Controller_Router_Route('archiwum.html', array('controller' => 'index', 'action' => 'archiwum')));
+$router->addRoute('mapastrony', new Zend_Controller_Router_Route('mapa-strony.html', array('controller' => 'index', 'action' => 'mapastrony')));
 
 // run!
 try
