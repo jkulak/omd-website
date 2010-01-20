@@ -1,22 +1,8 @@
 <div id="omdschool">
-    <h1 class="borderBottom">OMD School</h1>
+    <h1 class="borderBottom"><?php echo $this->article->getTitle() ?></h1>
 
 <div class="left">
-<p>OMD School to ceniona szkoła mediowa działająca na rynku już od 1999 roku.</p>
-<p>W ciągu 10 lat funkcjonowania jej wykładowcy przeszkolili ponad 1000 osób i liczba absolwentów treningów OMD School nieustannie rośnie, a szkolenia cieszą się coraz większym zainteresowaniem.  OMD School zaprasza na szkolenia otwarte i zamknięte przeznaczone dla pracowników działów marketingu, agencji reklamowych oraz mediów.</p>
-<p>Oferta OMD School obejmuje następujące szkolenia:</p>
-	<ul class="dotted">
-		<li>OMD School 1 – planowanie i realizacja kampanii reklamowych cz. I</li>
-		<li>OMD School 2 – planowanie i realizacja kampanii reklamowych cz. II</li>
-		<li>Produkcja filmów reklamowych oraz stosowanie produkt placement w marketingu</li>
-		<li>Niestandardowe kampanie - Internet w połączeniu z innymi mediami</li>
-		<li>WoM Training – szkolenie z marketingu szeptanego</li>
-		<li>OMD Badaczy - szkolenie z badań marketingowych</li>
-		<li>Akademia Gutenberga – szkolenie z technik poligraficznych</li>
-		<li>Fenomenologia marki – warsztaty brandingowe</li>
-		<li>Strategia pozycjonowania marki</li>
-		<li>Strategia komunikacji</li>
-	</ul>
+<?php echo $this->article->getContent() ?>
 </div>
 
 <div class="right">

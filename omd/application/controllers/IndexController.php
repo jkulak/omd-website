@@ -191,7 +191,16 @@ class IndexController extends Zend_Controller_Action
 	}
 	
 	function omdschoolAction() {
-		
+		$ArticlesApi = Dupa_Article_Api::getInstance();
+    try
+    {
+          $article = $ArticlesApi->getArticle( 33 );
+    }
+    catch( Exception $e )
+    {
+        echo $e->getMessage();
+    }
+    $this->view->article = $article;
 	}
 	
 	function siecomdAction() {
