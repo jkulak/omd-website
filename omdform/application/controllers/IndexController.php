@@ -5,6 +5,8 @@ class IndexController extends Zend_Controller_Action
 	
 	private $_apiCategories;
 	
+	private $_packSize = 10;
+	
 	public function init() {
 
    		/**
@@ -109,7 +111,7 @@ class IndexController extends Zend_Controller_Action
     	    	$data = array();
     	    	
 				$article = $this->_api->getArticle( $id );
-				
+
     		    $data['id'] = $article->getId();
     		    $data['title'] = $article->getTitle();
     		    $data['lead'] = $article->getLead();
@@ -118,7 +120,7 @@ class IndexController extends Zend_Controller_Action
     		    $data['addedby'] = $article->getAddBy();
     		    $data['updated'] = $article->getUpdateDate();
     		    $data['updatedby'] = $article->getUpdateBy();
-    		    $data['activate'] = $article->getEnableDate();
+    		    $data['activate'] = $article->getEnableDateFull();
     		    $data['deactivate'] = $article->getDisableDate();
     		    $data['status'] = $article->getStatus();
     		    $data['category'] = $article->getCategory(0) ? $article->getCategory(0)->getId() : null;
@@ -139,9 +141,11 @@ class IndexController extends Zend_Controller_Action
 		$this->_helper->viewRenderer->setNoRender();
 		
 		$first = $this->_request->getParam( 'first', 1 );
-		$first = ( $first > 1 ) ? ( ( $first / 40 ) + 1 ) : $first;
+		//$pack = ( $first > 1 ) ? ( ( $first / 40 ) + 1 ) : $first;
+        $packSize = $this->_packSize;
+		$pack = ( $first > 1 ) ? ( floor( $first / $packSize ) ) : 1;
 		
-		$cnt = $this->_api->getArticlesCount();
+		$cnt = $this->_api->getArticlesCountForm();
 		
 		$items = array(
 			'result' => array(
@@ -149,7 +153,7 @@ class IndexController extends Zend_Controller_Action
 				'total' => isSet( $cnt[0]['rows'] ) ? $cnt[0]['rows'] : 0
 			)
 		);
-		$list = $this->_api->getArticlesList( null, $first );
+		$list = $this->_api->getArticlesListForm( null, $pack, $packSize );
 
 		$i = 0;
 		if( $list )
