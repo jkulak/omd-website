@@ -1,0 +1,9 @@
+<div id="article">
+<?php if( $this->article ) : ?>
+	<h1><?php echo $this->article->getTitle() ?></h1>
+	<p class="date lead"><?php echo $this->article->getEnableDate() ?></p>
+	<p><?php echo $this->article->getContent() ?></p>
+<?php endif; ?>
+
+<span>« <a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html">Wróć do listy</a></span>
+</div>

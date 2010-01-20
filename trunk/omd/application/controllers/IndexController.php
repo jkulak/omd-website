@@ -225,6 +225,24 @@ class IndexController extends Zend_Controller_Action
 	    $this->view->article = $article;
 	}
 	
+	function analizaAction()
+	{	    
+	    $ArticlesApi = Dupa_Article_Api::getInstance();
+	    
+	    $articleId = intval( $this->getRequest()->getQuery( 'id' ) );
+	    
+	    try
+	    {
+            $article = $ArticlesApi->getArticle( $articleId );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
+	    
+	    $this->view->article = $article;
+	}
+	
 	function archiwumAction()
 	{
 	    $ArticlesApi = Dupa_Article_Api::getInstance();

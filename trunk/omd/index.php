@@ -72,6 +72,7 @@ $router->addRoute('analizyipublikacje', new Zend_Controller_Router_Route('analiz
 $router->addRoute('omdschool', new Zend_Controller_Router_Route('omd-school.html', array('controller' => 'index', 'action' => 'omdschool')));
 $router->addRoute('siecomd', new Zend_Controller_Router_Route('siec-omd.html', array('controller' => 'index', 'action' => 'siecomd')));
 $router->addRoute('artykul', new Zend_Controller_Router_Route('artykul.html', array('controller' => 'index', 'action' => 'artykul')));
+$router->addRoute('analiza', new Zend_Controller_Router_Route('analiza.html', array('controller' => 'index', 'action' => 'analiza')));
 $router->addRoute('archiwum', new Zend_Controller_Router_Route('archiwum.html', array('controller' => 'index', 'action' => 'archiwum')));
 
 // run!
