@@ -21,7 +21,7 @@
 </div>
 <div class="navigation">
 	<ul>
-		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
-		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">Nowsze informacje</a></li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/aktualnosci.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">Wcześniejsze informacje</a> &raquo;</li><?php endif; ?>
 	</ul>
 </div>

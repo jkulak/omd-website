@@ -1,7 +1,7 @@
 <div class="topBlock">
 	<div class="twitter">
 		<p>
-			Sprawdź nas na <a href="http://twitter.com/optimummediaomd">
+			Sprawdź nas na <a href="http://twitter.com/optimummediaomd" target="_blank">
 				<img src="<?= $this->baseUrl; ?>/public/images/twitterlogo.png" alt="Logo Twittera" />
 			</a>
 		</p>
@@ -9,7 +9,7 @@
 	<div class="something">
 			<?php if( sizeof($this->tweets )) : ?>
 				<?php for( $i = 0, $cnt = sizeof($this->tweets); $i < $cnt; $i++ ) :?>
-					<p id="tweet<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->tweets[$i] ?></p>
+					<p id="tweet<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?>><a href="http://twitter.com/optimummediaomd" target="_blank"><?php echo $this->tweets[$i] ?></a></p>
 				<?php endfor ?>
 			<?php endif; ?>
 	</div>
@@ -19,7 +19,7 @@
 <div class="news">
 	<h3>Aktualności</h3>
 	<?php for( $i = 0, $cnt = count( $this->addNews ); $i < $cnt; $i++ ) :?>
-		<p id="short<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?> ><?php echo $this->addNews[$i] ?></p>
+		<p id="short<?= $i; ?>" <?= ($i==0)?'':'style="display:none"'?>><a href="<?= $this->baseUrl; ?>/aktualnosci.html"><?php echo $this->addNews[$i] ?></a></p>
 	<?php endfor ?>
 </div>
 <?php endif; ?>

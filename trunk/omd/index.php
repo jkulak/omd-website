@@ -21,6 +21,8 @@ date_default_timezone_set('Europe/London');
 set_include_path(
       ROOT_PATH
 	. PATH_SEPARATOR . realpath( ROOT_PATH .'/library' )
+	. PATH_SEPARATOR . realpath( '/usr/httpd/lib/external' )
+	. PATH_SEPARATOR . realpath( '/usr/httpd/lib/internal' )
 	. PATH_SEPARATOR . realpath( APPLICATION_PATH )
 	. PATH_SEPARATOR . realpath( APPLICATION_PATH . '/models' )
 	. PATH_SEPARATOR . get_include_path()

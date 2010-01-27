@@ -271,6 +271,11 @@ img {
 	font-size: 14px;
 }
 
+#additional p a {
+	color: #fff;
+	text-decoration: none;
+}
+
 /* Footer */
 
 #footer {
