@@ -21,8 +21,8 @@
 </div>
 <div class="navigation">
 	<ul>
-		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">poprzednie</a></li><?php endif; ?>
-		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">następne</a> &raquo;</li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getPrevPack() ) : ?><li>&laquo; <a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getPrevPack() ?>">Nowsze artykuły</a></li><?php endif; ?>
+		<?php if( $this->mainNews->getNavigation()->getNextPack() ) : ?><li><a href="<?= $this->baseUrl; ?>/analizy-i-publikacje.html?p=<?php echo $this->mainNews->getNavigation()->getNextPack() ?>">Starsze artykuły</a> &raquo;</li><?php endif; ?>
 	</ul>
 </div>
 
