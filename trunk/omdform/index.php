@@ -9,15 +9,14 @@ defined('GLOBAL_LIB_PATH')
     || define('GLOBAL_LIB_PATH', 'c:/PHP Libs' ) ;
     
 set_include_path('.' . PATH_SEPARATOR . './library'
-    . PATH_SEPARATOR . './application/models/'
-    . PATH_SEPARATOR . get_include_path()
-	. PATH_SEPARATOR . GLOBAL_LIB_PATH
-    . PATH_SEPARATOR . '/opt/lampp/htdocs/lib/external/' //Zend
-    . PATH_SEPARATOR . '/opt/lampp/htdocs/lib/internal/'
-    . PATH_SEPARATOR . '/home/hhbd/lib/external/'
-    . PATH_SEPARATOR . '/home/hhbd/lib/internal/');
+		. PATH_SEPARATOR . './application/models/'
+		. PATH_SEPARATOR . get_include_path()
+		. PATH_SEPARATOR . GLOBAL_LIB_PATH
+		. PATH_SEPARATOR . '/usr/httpd/lib/external'
+		. PATH_SEPARATOR . '/usr/httpd/lib/internal');
 
 include "Zend/Loader.php";
+
 Zend_Loader::loadClass('Zend_Controller_Front');
 Zend_Loader::loadClass('Zend_Loader_Autoloader');
 $loader = Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
