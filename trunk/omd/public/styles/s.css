@@ -259,11 +259,19 @@ img {
 	padding: 0 6px 10px 6px;
 }
 
+#additional p.noBorder {
+	border: 0;
+	color: #2D414A;
+	font-weight: bold;
+		font-size: 14px;
+}
+
 #additional h3 {
 	margin-left: 8px;
 	font-weight: 0;
 	font-size:14px;
 	color: #2D414A;
+	margin-bottom: 18px;
 }
 
 #additional p h3 {
@@ -274,6 +282,10 @@ img {
 #additional p a {
 	color: #fff;
 	text-decoration: none;
+}
+
+#additional #twitter {
+	width: 61px;
 }
 
 /* Footer */
