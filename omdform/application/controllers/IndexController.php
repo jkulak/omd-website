@@ -155,7 +155,7 @@ class IndexController extends Zend_Controller_Action
 				'total' => isSet( $cnt[0]['rows'] ) ? $cnt[0]['rows'] : 0
 			)
 		);
-		$list = $this->_api->getArticlesListForm( null, $pack, $packSize );
+		$list = $this->_api->getArticlesListForm( null, $pack, $packSize, Dupa_Article_Api::SORT_ORDER_DESC );
 
 		$i = 0;
 		if( $list )
