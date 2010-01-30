@@ -51,6 +51,7 @@
                             mode : "exact",
                             elements : "contentTextarea",
                             theme : "advanced",
+                            language : "pl",
                             plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount",
                    
                             // Theme options
