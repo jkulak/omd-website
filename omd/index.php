@@ -49,6 +49,9 @@ $view->setEncoding('UTF-8');
 Zend_Loader::loadClass('Zend_Controller_Action_HelperBroker');
 Zend_Loader::loadClass('Zend_Controller_Action_Helper_ViewRenderer');
 Zend_Loader::loadClass('Zend_Layout');
+Zend_Loader::loadClass('Zend_Session');
+
+Zend_Session::start(); 
 
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);

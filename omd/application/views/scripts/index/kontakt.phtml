@@ -7,43 +7,11 @@
 	
 	<div class="half left">
 		<?php if( !$this->message ) :?>
-		<form action="" method="post">
-    		<h1 class="borderBottom">Formularz kontaktowy</h1>
-    		
-    		<p>Aby się z nami skontaktować możesz także wypełnić poniższy formularz:</p>
-    		<p>
-    			<label for="institution">Instytucja</label><br/>
-    			<input class="text" type="text" name="institution" id="institution" />		
-    		</p>
-    		<p>
-    			<label for="name">Imię i nazwisko</label><br/>
-    			<input class="text" type="text" name="name" id="name" />	
-    		</p>
-				<p>
-    			<label for="name">Stanowisko</label><br/>
-    			<input class="text" type="text" name="position" id="position" />	
-    		</p>
-    		<p>
-    			<label for="email">E-mail</label><br/>
-    			<input class="text" type="text" name="email" id="email" />		
-    		</p>
-    		<p>
-    			<label for="telephone">Telefon</label><br/>
-    			<input class="text" type="text" name="telephone" id="telephone" />		
-    		</p>
-    		<p>
-    			<label for="message">Wiadomość</label><br/>
-    			<textarea class="text" name="message" id="message" rows="5"></textarea>		
-    		</p>
-        <p>
-      		<input type="checkbox" name="copy" id="copy">
-	      	<label for="copy">Prześlij kopię tej wiadomości na swój e-mail</label>
-	      </p>
-				<p>
-					* - pole wymagane
-					</p>
-    		<p><input class="right" type="submit" value="Wyślij" /></p>
-		</form>
+			<h1 class="borderBottom">Formularz kontaktowy</h1>
+  		
+  		<p>Aby się z nami skontaktować możesz także wypełnić poniższy formularz: (* - pole wymagane)</p>
+		<?php echo $this->form ?>
+
 		<?php else :?>
 			<p class="center"><br/><br/><br/><br/><br/><?php echo $this->message ?></p>
 		<?php endif; ?>
