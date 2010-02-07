@@ -8,11 +8,23 @@ require_once 'Dupa/Service/Api/Twitter.php';
 
 class IndexController extends Zend_Controller_Action
 {
-    const MAIL_SEND_FROM_HOST  = '213.17.164.67';
+
+		const MAIL_SEND_FROM_HOST  = '213.17.164.67';
     const MAIL_SEND_FROM_USER  = 'om584';
     const MAIL_SEND_FROM_PASS  = 'web467dfg';
     const MAIL_SEND_FROM_EMAIL = 'optimum-media@optimum-media.pl';
     const MAIL_SEND_TO_EMAIL   = 'optimum-media@optimum-media.pl';
+		/*
+		const MAIL_SEND_FROM_HOST  = 'smtp.googlemail.com';
+    const MAIL_SEND_FROM_USER  = 'jakub.kulak';
+    const MAIL_SEND_FROM_PASS  = '';
+    const MAIL_SEND_FROM_EMAIL = 'jakub.kulak@gmail.com';
+    const MAIL_SEND_TO_EMAIL   = 'jakub.kulak@gmail.com';
+		const MAIL_SEND_FROM_PORT  = 587;
+		const MAIL_SEND_FROM_CONNECTION_TYPE = 'TLS';
+		*/
+
+
     
     private $_months = array( '01' => 'Styczen',
                               '02' => 'Luty',
@@ -48,9 +60,12 @@ class IndexController extends Zend_Controller_Action
 	    {
 	        echo $e->getMessage();
 	    }
-	    $this->view->addNews = array();
-			for ($i=0; $i < 3 && $i < count( $articles ); $i++) { 
-				$this->view->addNews[] = $articles[$i]->getLead();
+
+			if (isset($articles)) {
+				$this->view->addNews = array();
+				for ($i=0; $i < 3 && $i < count( $articles ); $i++) { 
+					$this->view->addNews[] = $articles[$i]->getLead();
+				}
 			}
 	
 		// pobranie wpisu z tweetera
@@ -59,6 +74,7 @@ class IndexController extends Zend_Controller_Action
 			'id' => 'OptimumMediaOMD',
 			'count' => 3
 			);
+
 		$response = $twitterApi->statusUserTimeline($params);
 		
 		$this->view->tweets = array();
@@ -73,53 +89,75 @@ class IndexController extends Zend_Controller_Action
 
     function kontaktAction()
     {
-        if( $this->getRequest()->isPost() )
-        {
-            $post = $this->getRequest()->getPost();
-
-            $config = array( 'auth' => 'login',
+			
+			Zend_Loader::loadClass('forms_ContactForm');
+			$form = new forms_ContactForm();
+			
+			if( $this->getRequest()->isPost() )
+			{
+				$formData = $this->getRequest()->getPost();
+				if ( $form->isValid( $formData ) )
+				{
+					$captchaSession = new Zend_Session_Namespace('Zend_Form_Captcha_'.$formData['captcha']['id']);
+				  $captchaIterator = $captchaSession->getIterator();
+				  if($formData['captcha']['input'] == $captchaIterator['word'])
+				  {
+						$config = array( 'auth' => 'login',
                              'username' => self::MAIL_SEND_FROM_USER,
-                             'password' => self::MAIL_SEND_FROM_PASS );
+                             'password' => self::MAIL_SEND_FROM_PASS,
+															'port' => self::MAIL_SEND_FROM_PORT,
+															'ssl' => self::MAIL_SEND_FROM_CONNECTION_TYPE);
 
             $transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST, $config );
-            //$transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST );
 
             $mail = new Zend_Mail( 'UTF-8' );
             
-            $body = "Instytucja:\n" . $post['institution'];
-            $body .= "\n\nImię i nazwisko:\n" . $post['name'];
-            $body .= "\n\nStanowisko:\n" . $post['position'];
-            $body .= "\n\nE-mail:\n" . $post['email'];
-            $body .= "\n\nTelefon:\n" . $post['telephone'];
-            $body .= "\n\nWiadomość:\n" . $post['message'];            
+            $body = "Instytucja:\n" . $formData['institution'];
+            $body .= "\n\nImię i nazwisko:\n" . $formData['name'];
+            $body .= "\n\nStanowisko:\n" . $formData['position'];
+            $body .= "\n\nE-mail:\n" . $formData['email'];
+            $body .= "\n\nTelefon:\n" . $formData['telephone'];
+            $body .= "\n\nWiadomość:\n" . $formData['message'];            
             
             $mail->setBodyText( $body );
-            $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'OMD' );
+            $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'Formularz z optimum-media.pl' );
             $mail->addTo( self::MAIL_SEND_TO_EMAIL, 'OMD' );
-            if( isset( $post['copy'] ) && $post['copy'] == 'on' )
+            if( isset( $formData['copy'] ) && $formData['copy'] == 'on' )
             {
                 $validator = new Zend_Validate_EmailAddress();
-                if( $validator->isValid( $post['email'] ) )
+                if( $validator->isValid( $formData['email'] ) )
                 {
-                    $mail->addTo( $post['email'], $post['name'] );
+                    $mail->addTo( $formData['email'], $formData['name'] );
                 }
             }
                 
-            $mail->setSubject( 'Nowa wiadomość' );
+            $mail->setSubject( 'Nowa wiadomość od: ' . $formData['name'] );
             
             try
             {
                 $res = $mail->send( $transport );
-
                 $message = 'Wiadomość została wysłana.';                
             }
             catch( Zend_Mail_Protocol_Exception $e )
             {
-                $message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
+							$message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
             }
-
             $this->view->message = $message;
-        }
+				  }
+				  else
+				  {
+						echo 'captcha failed';
+			  	}
+				}
+				else
+				{
+					echo 'form not validated';
+					$form->populate( $formData );
+				}
+			}
+
+			$this->view->form = $form;
+            
 
 				$ArticlesApi = Dupa_Article_Api::getInstance();
 		    try
