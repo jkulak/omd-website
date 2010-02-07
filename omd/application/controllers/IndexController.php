@@ -136,13 +136,13 @@ class IndexController extends Zend_Controller_Action
            }
            $this->view->message = $message;
 			  }
-			}
-			else
-			{
-				$form->populate( $formData );
+				else
+				{
+					$form->populate( $formData );
+				}
 			}
 			
-		$this->view->form = $form;
+			$this->view->form = $form;
             
 
 			$ArticlesApi = Dupa_Article_Api::getInstance();
