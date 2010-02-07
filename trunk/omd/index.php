@@ -34,6 +34,9 @@ include "Zend/Loader.php";
 Zend_Loader::loadClass('Zend_Controller_Front');
 Zend_Loader::loadClass('Zend_View');
 
+Zend_Loader::loadClass('Zend_Session');
+Zend_Session::start();
+
 // setup controller
 $frontController = Zend_Controller_Front::getInstance();
 //$this->frontController->setParam('noErrorHandler', TRUE);
@@ -49,9 +52,6 @@ $view->setEncoding('UTF-8');
 Zend_Loader::loadClass('Zend_Controller_Action_HelperBroker');
 Zend_Loader::loadClass('Zend_Controller_Action_Helper_ViewRenderer');
 Zend_Loader::loadClass('Zend_Layout');
-Zend_Loader::loadClass('Zend_Session');
-
-Zend_Session::start(); 
 
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
