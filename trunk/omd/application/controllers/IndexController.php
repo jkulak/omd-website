@@ -23,8 +23,6 @@ class IndexController extends Zend_Controller_Action
 		const MAIL_SEND_FROM_PORT  = 587;
 		const MAIL_SEND_FROM_CONNECTION_TYPE = 'TLS';
 		*/
-
-
     
     private $_months = array( '01' => 'Styczen',
                               '02' => 'Luty',
@@ -98,77 +96,65 @@ class IndexController extends Zend_Controller_Action
 				$formData = $this->getRequest()->getPost();
 				if ( $form->isValid( $formData ) )
 				{
-					$captchaSession = new Zend_Session_Namespace('Zend_Form_Captcha_'.$formData['captcha']['id']);
-				  $captchaIterator = $captchaSession->getIterator();
-				  if($formData['captcha']['input'] == $captchaIterator['word'])
-				  {
-						$config = array( 'auth' => 'login',
-                             'username' => self::MAIL_SEND_FROM_USER,
-                             'password' => self::MAIL_SEND_FROM_PASS,
-															'port' => self::MAIL_SEND_FROM_PORT,
-															'ssl' => self::MAIL_SEND_FROM_CONNECTION_TYPE);
+					$config = array( 'auth' => 'login',
+                            'username' => self::MAIL_SEND_FROM_USER,
+                            'password' => self::MAIL_SEND_FROM_PASS);
 
-            $transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST, $config );
+           $transport = new Zend_Mail_Transport_Smtp( self::MAIL_SEND_FROM_HOST, $config );
 
-            $mail = new Zend_Mail( 'UTF-8' );
-            
-            $body = "Instytucja:\n" . $formData['institution'];
-            $body .= "\n\nImię i nazwisko:\n" . $formData['name'];
-            $body .= "\n\nStanowisko:\n" . $formData['position'];
-            $body .= "\n\nE-mail:\n" . $formData['email'];
-            $body .= "\n\nTelefon:\n" . $formData['telephone'];
-            $body .= "\n\nWiadomość:\n" . $formData['message'];            
-            
-            $mail->setBodyText( $body );
-            $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'Formularz z optimum-media.pl' );
-            $mail->addTo( self::MAIL_SEND_TO_EMAIL, 'OMD' );
-            if( isset( $formData['copy'] ) && $formData['copy'] == 'on' )
-            {
-                $validator = new Zend_Validate_EmailAddress();
-                if( $validator->isValid( $formData['email'] ) )
-                {
-                    $mail->addTo( $formData['email'], $formData['name'] );
-                }
-            }
-                
-            $mail->setSubject( 'Nowa wiadomość od: ' . $formData['name'] );
-            
-            try
-            {
-                $res = $mail->send( $transport );
-                $message = 'Wiadomość została wysłana.';                
-            }
-            catch( Zend_Mail_Protocol_Exception $e )
-            {
-							$message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
-            }
-            $this->view->message = $message;
-				  }
-				  else
-				  {
-						echo 'captcha failed';
-			  	}
-				}
-				else
-				{
-					echo 'form not validated';
-					$form->populate( $formData );
-				}
+           $mail = new Zend_Mail( 'UTF-8' );
+           
+           $body = "Instytucja:\n" . $formData['institution'];
+           $body .= "\n\nImię i nazwisko:\n" . $formData['name'];
+           $body .= "\n\nStanowisko:\n" . $formData['position'];
+           $body .= "\n\nE-mail:\n" . $formData['email'];
+           $body .= "\n\nTelefon:\n" . $formData['telephone'];
+           $body .= "\n\nWiadomość:\n" . $formData['message'];            
+           
+           $mail->setBodyText( $body );
+           $mail->setFrom( self::MAIL_SEND_FROM_EMAIL, 'Formularz z optimum-media.pl' );
+           $mail->addTo( self::MAIL_SEND_TO_EMAIL, 'OMD' );
+           if( isset( $formData['copy'] ) && $formData['copy'] == 'on' )
+           {
+               $validator = new Zend_Validate_EmailAddress();
+               if( $validator->isValid( $formData['email'] ) )
+               {
+                   $mail->addTo( $formData['email'], $formData['name'] );
+               }
+           }
+               
+           $mail->setSubject( 'Nowa wiadomość od: ' . $formData['name'] );
+           
+           try
+           {
+               $res = $mail->send( $transport );
+               $message = 'Wiadomość została wysłana.';                
+           }
+           catch( Zend_Mail_Protocol_Exception $e )
+           {
+						$message = 'Wystąpił błąd podczas wysyłania wiadmomości. Spróbuj później.';
+           }
+           $this->view->message = $message;
+			  }
 			}
-
-			$this->view->form = $form;
+			else
+			{
+				$form->populate( $formData );
+			}
+			
+		$this->view->form = $form;
             
 
-				$ArticlesApi = Dupa_Article_Api::getInstance();
-		    try
-		    {
-		          $article = $ArticlesApi->getArticle( 35 );
-		    }
-		    catch( Exception $e )
-		    {
-		        echo $e->getMessage();
-		    }
-		    $this->view->article = $article;
+			$ArticlesApi = Dupa_Article_Api::getInstance();
+	    try
+	    {
+	          $article = $ArticlesApi->getArticle( 35 );
+	    }
+	    catch( Exception $e )
+	    {
+	        echo $e->getMessage();
+	    }
+	  $this->view->article = $article;
     }
     
     function onasAction() {
