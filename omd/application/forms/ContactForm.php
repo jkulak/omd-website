@@ -18,9 +18,7 @@ class forms_ContactForm extends Zend_Form
         parent::__construct($options);
 	
 				$this->setMethod('post');
-				
-				
-	
+
 				$institution = new Zend_Form_Element_Text('institution', array('required' => true, 'label' => 'Instytucja *', 'class' => 'text'));
 				$institution->addValidator('NotEmpty', true, array ('messages' => array ('isEmpty' => self::VALIDATION_ERROR_EMPTY ) ) );
 	
@@ -48,8 +46,7 @@ class forms_ContactForm extends Zend_Form
 					'captcha' => array(
 						'captcha' => 'Dumb',
 			    	'wordLen' => 3,
-			    	'timeout' => 5,
-			    	'required' => true
+			    	'timeout' => 5
 						)
 					));
 
