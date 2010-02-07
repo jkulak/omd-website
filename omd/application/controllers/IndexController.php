@@ -87,6 +87,7 @@ class IndexController extends Zend_Controller_Action
 
     function kontaktAction()
     {
+			 
 			
 			Zend_Loader::loadClass('forms_ContactForm');
 			$form = new forms_ContactForm();
@@ -94,6 +95,7 @@ class IndexController extends Zend_Controller_Action
 			if( $this->getRequest()->isPost() )
 			{
 				$formData = $this->getRequest()->getPost();
+				
 				if ( $form->isValid( $formData ) )
 				{
 					$config = array( 'auth' => 'login',
@@ -140,9 +142,9 @@ class IndexController extends Zend_Controller_Action
 				{
 					$form->populate( $formData );
 				}
-			}
+		}
 			
-			$this->view->form = $form;
+		$this->view->form = $form;
             
 
 			$ArticlesApi = Dupa_Article_Api::getInstance();

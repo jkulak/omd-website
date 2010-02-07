@@ -46,7 +46,7 @@ class forms_ContactForm extends Zend_Form
 					'captcha' => array(
 						'captcha' => 'Dumb',
 			    	'wordLen' => 3,
-			    	'timeout' => 5
+			    	'timeout' => 500
 						)
 					));
 
