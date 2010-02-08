@@ -1,12 +1,5 @@
 <?php
 
-Zend_Loader::loadClass('Zend_Form');
-Zend_Loader::loadClass('Zend_Form_Element_Text');
-Zend_Loader::loadClass('Zend_Form_Element_Submit');
-Zend_Loader::loadClass('Zend_Form_Element_Textarea');
-Zend_Loader::loadClass('Zend_Form_Element_Checkbox');
-Zend_Loader::loadClass('Zend_Form_Element_Captcha');
-
 class forms_ContactForm extends Zend_Form 
 { 
 	const VALIDATION_ERROR_EMPTY = 'Pole jest wymagane i nie może pozostać puste';

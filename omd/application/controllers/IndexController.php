@@ -65,20 +65,10 @@ class IndexController extends Zend_Controller_Action
 					$this->view->addNews[] = $articles[$i]->getLead();
 				}
 			}
-	
-		// pobranie wpisu z tweetera
-		$twitterApi = new Phly_Twitter('', '');
-		$params = array(
-			'id' => 'OptimumMediaOMD',
-			'count' => 3
-			);
-
-		$response = $twitterApi->statusUserTimeline($params);
-		
-		$this->view->tweets = array();
-		for ($i=0; $i < 3; $i++) { 
-			$this->view->tweets[] = $response->status[$i]->text;
-		}
+			
+			Zend_Loader::loadClass('Models_Twitter');
+			$twitter = new Models_Twitter();
+			$this->view->tweets = $twitter->getTwitts();
 	} 
    
 	function indexAction()
@@ -87,8 +77,6 @@ class IndexController extends Zend_Controller_Action
 
     function kontaktAction()
     {
-			 
-			
 			Zend_Loader::loadClass('forms_ContactForm');
 			$form = new forms_ContactForm();
 			

@@ -29,12 +29,9 @@ set_include_path(
 	. PATH_SEPARATOR . GLOBAL_LIB_PATH
 	. PATH_SEPARATOR . '/home/hhbd/lib/external/');
 	
-include "Zend/Loader.php";
+include "Zend/Loader/Autoloader.php";
+Zend_Loader_Autoloader::getInstance();
 
-Zend_Loader::loadClass('Zend_Controller_Front');
-Zend_Loader::loadClass('Zend_View');
-
-Zend_Loader::loadClass('Zend_Session');
 Zend_Session::start();
 
 // setup controller
@@ -43,15 +40,9 @@ $frontController = Zend_Controller_Front::getInstance();
 $frontController->throwExceptions(true);
 
 $frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ) );
-//$frontController->setControllerDirectory( realpath( APPLICATION_PATH . '/controllers' ), 'omd' );
-//$frontController->setBaseUrl('/omd');
 
 $view = new Zend_View;
 $view->setEncoding('UTF-8');
-
-Zend_Loader::loadClass('Zend_Controller_Action_HelperBroker');
-Zend_Loader::loadClass('Zend_Controller_Action_Helper_ViewRenderer');
-Zend_Loader::loadClass('Zend_Layout');
 
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
@@ -60,10 +51,7 @@ Zend_Layout::startMvc(
 		'layoutPath' => realpath( APPLICATION_PATH . '/views/layouts' ),
     	'layout' => 'common'
 		)
-		);
-
-
-// print_r($frontController);
+	);
 
 $router = $frontController->getRouter(); // returns a rewrite router by default
 
