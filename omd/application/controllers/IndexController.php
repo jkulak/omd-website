@@ -66,7 +66,8 @@ class IndexController extends Zend_Controller_Action
 				}
 			}
 			
-			Zend_Loader::loadClass('Models_Twitter');
+			//Zend_Loader::loadClass('Models_Twitter');
+			include_once('models/Twitter.php');
 			$twitter = new Models_Twitter();
 			$this->view->tweets = $twitter->getTwitts();
 	} 
